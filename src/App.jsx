@@ -13,7 +13,9 @@ import {
   SlidersHorizontal,
   Smartphone,
   Monitor,
-  HeartHandshake
+  HeartHandshake,
+  Coffee,
+  Check
 } from 'lucide-react';
 import confetti from 'canvas-confetti';
 
@@ -22,13 +24,14 @@ import { SCIENCE_HABITS_BY_CONCERN } from './data/habits';
 
 import ProductCard from './components/ProductCard';
 import NotificationBanner from './components/NotificationBanner';
-import MicroHabitsCompanion from './components/MicroHabitsCompanion';
 import DailyReadinessRing from './components/DailyReadinessRing';
 import AddProductDrawer from './components/AddProductDrawer';
 import BottleMatchModal from './components/BottleMatchModal';
 import ProductDetailModal from './components/ProductDetailModal';
 
-const STORAGE_KEY = 'bodywise_care_companion_state_v2';
+const STORAGE_KEY = 'bodywise_care_companion_state_v3';
+
+const DAY_NAMES = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
 
 export default function App() {
   // ----------------------------------------------------
@@ -75,6 +78,9 @@ export default function App() {
     }
     return 3; // Wednesday by default (Active day for AHA BHA 3x/week!)
   });
+
+  // Shelf view mode: 'today' (strictly only products scheduled for today) or 'all'
+  const [shelfFilter, setShelfFilter] = useState('today');
 
   // Mobile container preview mode toggle ('desktop' | 'mobile-frame')
   const [viewMode, setViewMode] = useState('desktop');
@@ -147,7 +153,6 @@ export default function App() {
     // Prompt the Bottle Match Check modal after a brief pause so user watches the fluid drop
     setTimeout(() => {
       if (targetProduct) {
-        // Updated product snapshot
         const updated = {
           ...targetProduct,
           remainingUses: Math.max(0, targetProduct.remainingUses - 1),
@@ -202,20 +207,30 @@ export default function App() {
       setActiveProducts(DEFAULT_ACTIVE_PRODUCTS);
       setCheckedHabits({ 'habit-dry-60s': true });
       setSimulatedDay(3);
+      setShelfFilter('today');
       triggerToast('Demo reset successfully to initial Be Bodywise clinical state!');
     }
   };
 
   // ----------------------------------------------------
-  // Derived Readiness Metrics
+  // Filter products by schedule:
+  // On days the product is not supposed to be used, it is completely removed from showing!
   // ----------------------------------------------------
-  const activeConcerns = Array.from(new Set(activeProducts.map(p => p.concernId)));
-  const productsDueToday = activeProducts.filter(p => p.frequencyDays.includes(simulatedDay));
-  const productsLoggedToday = activeProducts.filter(p => p.loggedToday).length;
+  const productsScheduledToday = activeProducts.filter(p => p.frequencyDays.includes(simulatedDay));
+  const productsDisplayed = shelfFilter === 'today' ? productsScheduledToday : activeProducts;
+
+  // ----------------------------------------------------
+  // Derived Readiness Metrics for Today's Scheduled Care
+  // ----------------------------------------------------
+  const productsDueToday = productsScheduledToday;
+  const productsLoggedToday = productsDueToday.filter(p => p.loggedToday).length;
+
+  // Active concerns from today's scheduled products
+  const todayConcerns = Array.from(new Set(productsDueToday.map(p => p.concernId)));
 
   let habitsTotalCount = 0;
   let habitsCheckedCount = 0;
-  activeConcerns.forEach(cKey => {
+  todayConcerns.forEach(cKey => {
     const group = SCIENCE_HABITS_BY_CONCERN[cKey];
     if (group) {
       group.habits.forEach(h => {
@@ -271,7 +286,7 @@ export default function App() {
                 type="button"
                 onClick={handleResetDemo}
                 className="px-2.5 sm:px-3 py-1.5 rounded-xl border border-cream-300 bg-cream-50 hover:bg-cream-200 text-charcoal-700 text-xs font-bold flex items-center gap-1.5 transition-colors shadow-sm"
-                title="Reset all routines and bottle depletion levels to initial demo state"
+                title="Reset all routine doses and bottle depletion levels to initial demo state"
               >
                 <RotateCcw className="w-3.5 h-3.5 text-terracotta-600" />
                 <span className="hidden sm:inline">Reset Demo</span>
@@ -326,15 +341,15 @@ export default function App() {
                 Your Routine & Dosage Protocol
               </h2>
               <p className="text-xs text-charcoal-600 mt-1 max-w-xl leading-relaxed">
-                Formulated actives only deliver transformative results when applied at the correct frequency and clinical volume. Track your liquid depletion to prevent under-dosing.
+                Formulated actives deliver transformative results when applied at the correct frequency and clinical volume. Track your liquid depletion to prevent under-dosing.
               </p>
             </div>
 
             {/* Quick summary stats */}
             <div className="flex items-center gap-3 self-start sm:self-auto pt-1 sm:pt-0">
               <div className="px-3.5 py-2 rounded-2xl bg-white border border-cream-200 text-center shadow-warm-sm">
-                <p className="text-[10px] font-bold text-charcoal-500 uppercase tracking-wider">Active Shelf</p>
-                <p className="text-sm font-extrabold text-charcoal-900">{activeProducts.length} Products</p>
+                <p className="text-[10px] font-bold text-charcoal-500 uppercase tracking-wider">Scheduled Today</p>
+                <p className="text-sm font-extrabold text-charcoal-900">{productsScheduledToday.length} Products</p>
               </div>
               <div className="px-3.5 py-2 rounded-2xl bg-white border border-cream-200 text-center shadow-warm-sm">
                 <p className="text-[10px] font-bold text-charcoal-500 uppercase tracking-wider">Best Streak</p>
@@ -353,17 +368,17 @@ export default function App() {
               activeProducts={activeProducts}
               onSimulateDayChange={(newDay) => {
                 setSimulatedDay(newDay);
-                triggerToast(`Simulating ${['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'][newDay]} schedule.`);
+                triggerToast(`Simulating ${DAY_NAMES[newDay]} schedule.`);
               }}
               onQuickLogDose={handleLogDose}
             />
           </section>
 
-          {/* Daily Readiness Ring Card */}
+          {/* Daily Readiness Ring Card (Dynamically tied to today's active items) */}
           <section>
             <DailyReadinessRing 
               productsLogged={productsLoggedToday}
-              productsTotal={productsDueToday.length || activeProducts.length}
+              productsTotal={productsDueToday.length}
               habitsChecked={habitsCheckedCount}
               habitsTotal={habitsTotalCount}
             />
@@ -371,47 +386,95 @@ export default function App() {
 
           {/* 2. Active Routine Dashboard & Depleting Bottle Tracker Shelf */}
           <section className="space-y-4">
-            <div className="flex items-center justify-between">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
               <div>
                 <span className="text-[10px] font-bold uppercase tracking-wider text-charcoal-500">
                   Daily Protocols
                 </span>
                 <h3 className="text-lg font-bold text-charcoal-900">
-                  Active Routine Shelf
+                  {shelfFilter === 'today'
+                    ? `Active Routine for ${DAY_NAMES[simulatedDay]}`
+                    : 'All Routine Shelf Products'}
                 </h3>
               </div>
-              <button
-                type="button"
-                onClick={() => setIsAddDrawerOpen(true)}
-                className="text-xs font-bold text-terracotta-600 hover:text-terracotta-700 flex items-center gap-1"
-              >
-                <Plus className="w-3.5 h-3.5" />
-                <span>Add SKU to Shelf</span>
-              </button>
+
+              {/* Shelf Filter Toggle */}
+              <div className="flex items-center gap-2 self-start sm:self-auto">
+                <div className="flex items-center p-0.5 bg-cream-200/80 rounded-xl border border-cream-300 text-xs font-bold">
+                  <button
+                    type="button"
+                    onClick={() => setShelfFilter('today')}
+                    className={`px-3 py-1.5 rounded-lg transition-all ${
+                      shelfFilter === 'today'
+                        ? 'bg-white text-charcoal-900 shadow-sm'
+                        : 'text-charcoal-600 hover:text-charcoal-800'
+                    }`}
+                  >
+                    Scheduled Today ({productsScheduledToday.length})
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setShelfFilter('all')}
+                    className={`px-3 py-1.5 rounded-lg transition-all ${
+                      shelfFilter === 'all'
+                        ? 'bg-white text-charcoal-900 shadow-sm'
+                        : 'text-charcoal-600 hover:text-charcoal-800'
+                    }`}
+                  >
+                    All Shelf SKUs ({activeProducts.length})
+                  </button>
+                </div>
+
+                <button
+                  type="button"
+                  onClick={() => setIsAddDrawerOpen(true)}
+                  className="text-xs font-bold text-terracotta-600 hover:text-terracotta-700 flex items-center gap-1 px-2.5 py-1.5 rounded-xl border border-cream-300 bg-white hover:bg-cream-50 transition-colors shadow-sm"
+                >
+                  <Plus className="w-3.5 h-3.5" />
+                  <span>Add SKU</span>
+                </button>
+              </div>
             </div>
 
-            {/* List of Product Cards */}
-            <div className="space-y-4">
-              {activeProducts.map((product) => (
-                <ProductCard 
-                  key={product.id}
-                  product={product}
-                  currentDayOfWeek={simulatedDay}
-                  onLogDose={handleLogDose}
-                  onOpenMatchCheck={(prod) => setMatchCheckProduct(prod)}
-                  onOpenDetailModal={(prod) => setDetailModalProduct(prod)}
-                />
-              ))}
-            </div>
-          </section>
-
-          {/* 3. Science-Backed Micro-Habits Companion (Dynamic by Active Concern) */}
-          <section>
-            <MicroHabitsCompanion 
-              activeProductConcerns={activeConcerns}
-              checkedHabits={checkedHabits}
-              onToggleHabit={handleToggleHabit}
-            />
+            {/* List of Product Cards (Each with integrated Science-Backed Daily Boosters) */}
+            {productsDisplayed.length > 0 ? (
+              <div className="space-y-5">
+                {productsDisplayed.map((product) => (
+                  <ProductCard 
+                    key={product.id}
+                    product={product}
+                    currentDayOfWeek={simulatedDay}
+                    checkedHabits={checkedHabits}
+                    onToggleHabit={handleToggleHabit}
+                    onLogDose={handleLogDose}
+                    onOpenMatchCheck={(prod) => setMatchCheckProduct(prod)}
+                    onOpenDetailModal={(prod) => setDetailModalProduct(prod)}
+                  />
+                ))}
+              </div>
+            ) : (
+              /* Rest day state when no products are scheduled on this day */
+              <div className="p-8 rounded-3xl bg-white border border-cream-300 shadow-warm text-center space-y-3">
+                <div className="w-12 h-12 rounded-2xl bg-cream-100 flex items-center justify-center mx-auto text-charcoal-500">
+                  <Coffee className="w-6 h-6 text-terracotta-500" />
+                </div>
+                <h4 className="text-base font-bold text-charcoal-800">
+                  Rest & Barrier Recovery Day
+                </h4>
+                <p className="text-xs text-charcoal-600 max-w-md mx-auto leading-relaxed">
+                  No active exfoliants or chemical treatments are scheduled for {DAY_NAMES[simulatedDay]}. Your skin lipid barrier is resting and regenerating. See you on your next scheduled dose!
+                </p>
+                <div className="pt-2">
+                  <button
+                    type="button"
+                    onClick={() => setShelfFilter('all')}
+                    className="text-xs font-bold text-terracotta-600 hover:underline"
+                  >
+                    View all {activeProducts.length} shelf products →
+                  </button>
+                </div>
+              </div>
+            )}
           </section>
 
           {/* Educational Clinical Footer Card */}
@@ -423,7 +486,7 @@ export default function App() {
               The Be Bodywise Clinical Commitment
             </h4>
             <p className="text-xs text-charcoal-600 max-w-lg mx-auto leading-relaxed">
-              Dermatologically tested formulations designed for female physiology. No harsh parabens, sulfates, or artificial fillers. Active ingredients calibrated to deliver clinical cellular turnover over a 4–12 week period.
+              Dermatologically tested formulations designed for female physiology. Active ingredients calibrated to deliver clinical cellular turnover over a 4–12 week period.
             </p>
             <div className="pt-2 text-[11px] text-charcoal-400 font-medium">
               Bodywise Care Companion • Interactive Post-Purchase Experience
