@@ -55,13 +55,18 @@ export default function App() {
       const saved = localStorage.getItem(STORAGE_KEY);
       if (saved) {
         const parsed = JSON.parse(saved);
-        if (parsed.checkedHabits) return parsed.checkedHabits;
+        if (parsed.checkedHabits) {
+          // The first booster was previously pre-checked in the demo.
+          // Remove that default so every booster starts unchecked.
+          const { 'habit-dry-60s': _previousDemoDefault, ...userCheckedHabits } = parsed.checkedHabits;
+          return userCheckedHabits;
+        }
       }
     } catch (e) {
       console.error('Error loading checked habits:', e);
     }
-    // Pre-check 1 habit for friendly initial state
-    return { 'habit-dry-60s': true };
+    // Start with every daily booster unchecked.
+    return {};
   });
 
   const [simulatedDay, setSimulatedDay] = useState(() => {
@@ -78,7 +83,7 @@ export default function App() {
   });
 
   // Shelf view mode: 'all' (default: nothing disappears, rest days clearly highlighted!) or 'due_only'
-  const [shelfFilter, setShelfFilter] = useState('all');
+  const [shelfFilter, setShelfFilter] = useState('due_only');
 
   // Modals & Drawers
   const [isAddDrawerOpen, setIsAddDrawerOpen] = useState(false);
@@ -200,9 +205,9 @@ export default function App() {
     if (window.confirm('Reset all routine doses, bottle levels, and habit streaks to default Be Bodywise demo state?')) {
       localStorage.removeItem(STORAGE_KEY);
       setActiveProducts(DEFAULT_ACTIVE_PRODUCTS);
-      setCheckedHabits({ 'habit-dry-60s': true });
+      setCheckedHabits({});
       setSimulatedDay(3);
-      setShelfFilter('all');
+      setShelfFilter('due_only');
       triggerToast('Demo reset successfully to initial Be Bodywise clinical state!');
     }
   };
@@ -336,6 +341,7 @@ export default function App() {
               activeProducts={activeProducts}
               onSimulateDayChange={(newDay) => {
                 setSimulatedDay(newDay);
+                setShelfFilter('due_only');
                 triggerToast(`Simulating ${DAY_NAMES[newDay]} schedule.`);
               }}
               onQuickLogDose={handleLogDose}
