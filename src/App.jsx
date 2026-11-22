@@ -29,7 +29,7 @@ import AddProductDrawer from './components/AddProductDrawer';
 import BottleMatchModal from './components/BottleMatchModal';
 import ProductDetailModal from './components/ProductDetailModal';
 
-const STORAGE_KEY = 'bodywise_care_companion_state_v5';
+const STORAGE_KEY = 'bodywise_care_companion_state_v6';
 
 const DAY_NAMES = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
 
@@ -79,8 +79,8 @@ export default function App() {
     return 3; // Wednesday by default (Active day for AHA BHA 3x/week!)
   });
 
-  // Shelf view mode: 'today' (strictly only products scheduled for today) or 'all'
-  const [shelfFilter, setShelfFilter] = useState('today');
+  // Shelf view mode: 'all' (default: nothing disappears, rest days clearly highlighted!) or 'due_only'
+  const [shelfFilter, setShelfFilter] = useState('all');
 
   // Mobile container preview mode toggle ('desktop' | 'mobile-frame')
   const [viewMode, setViewMode] = useState('desktop');
@@ -207,17 +207,18 @@ export default function App() {
       setActiveProducts(DEFAULT_ACTIVE_PRODUCTS);
       setCheckedHabits({ 'habit-dry-60s': true });
       setSimulatedDay(3);
-      setShelfFilter('today');
+      setShelfFilter('all');
       triggerToast('Demo reset successfully to initial Be Bodywise clinical state!');
     }
   };
 
   // ----------------------------------------------------
-  // Filter products by schedule:
-  // On days the product is not supposed to be used, it is completely removed from showing!
+  // Product display list:
+  // By default, ALL items stay visible on shelf so nothing disappears!
+  // Products not scheduled for today are prominently HIGHLIGHTED as Rest Days.
   // ----------------------------------------------------
   const productsScheduledToday = activeProducts.filter(p => p.frequencyDays.includes(simulatedDay));
-  const productsDisplayed = shelfFilter === 'today' ? productsScheduledToday : activeProducts;
+  const productsDisplayed = shelfFilter === 'due_only' ? productsScheduledToday : activeProducts;
 
   // ----------------------------------------------------
   // Derived Readiness Metrics for Today's Scheduled Care
@@ -225,7 +226,6 @@ export default function App() {
   const productsDueToday = productsScheduledToday;
   const productsLoggedToday = productsDueToday.filter(p => p.loggedToday).length;
 
-  // Active concerns from today's scheduled products
   const todayConcerns = Array.from(new Set(productsDueToday.map(p => p.concernId)));
 
   let habitsTotalCount = 0;
@@ -259,7 +259,7 @@ export default function App() {
         {/* ================= HEADER IN PROMINENT BRAND #005995 ================= */}
         <header className="sticky top-0 z-40 bg-[#005995] text-white border-b-2 border-[#00487A] px-4 sm:px-6 py-4 shadow-md">
           <div className="flex items-center justify-between">
-            {/* Brand Logo & Clinical Subtitle in White on #005995 */}
+            {/* Brand Logo & Clinical Subtitle */}
             <div className="flex items-center gap-3">
               <div className="w-10 h-10 rounded-2xl bg-white flex items-center justify-center text-[#005995] shadow-sm">
                 <ShieldCheck className="w-6 h-6 text-[#005995]" />
@@ -292,7 +292,7 @@ export default function App() {
                 <span className="hidden sm:inline">Reset Demo</span>
               </button>
 
-              {/* + Add Item Button in Crisp White on #005995 */}
+              {/* + Add Item Button */}
               <button
                 type="button"
                 onClick={() => setIsAddDrawerOpen(true)}
@@ -331,7 +331,7 @@ export default function App() {
 
         {/* ================= MAIN CONTENT ================= */}
         <main className="p-4 sm:p-6 space-y-6">
-          {/* Welcome & Clinical Intent Hero Banner in Rich #005995 */}
+          {/* Welcome & Clinical Intent Hero Banner */}
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 p-5 sm:p-6 rounded-3xl bg-gradient-to-br from-[#005995] via-[#00487A] to-[#00385F] text-white shadow-bodywise border-2 border-[#005995]">
             <div className="space-y-1 max-w-xl">
               <span className="inline-block text-[11px] font-bold tracking-wider uppercase px-2.5 py-0.5 rounded-full bg-white/20 text-white border border-white/30">
@@ -345,11 +345,11 @@ export default function App() {
               </p>
             </div>
 
-            {/* Quick summary stats in semi-transparent white/blue glass */}
+            {/* Quick summary stats in semi-transparent glass */}
             <div className="flex items-center gap-3 self-start sm:self-auto pt-1 sm:pt-0">
               <div className="px-4 py-2.5 rounded-2xl bg-white/15 backdrop-blur-md border border-white/25 text-center shadow-sm">
-                <p className="text-[10px] font-bold text-white/80 uppercase tracking-wider">Scheduled Today</p>
-                <p className="text-base font-black text-white">{productsScheduledToday.length} Items</p>
+                <p className="text-[10px] font-bold text-white/80 uppercase tracking-wider">Due Today</p>
+                <p className="text-base font-black text-white">{productsScheduledToday.length} of {activeProducts.length} Items</p>
               </div>
               <div className="px-4 py-2.5 rounded-2xl bg-white/15 backdrop-blur-md border border-white/25 text-center shadow-sm">
                 <p className="text-[10px] font-bold text-white/80 uppercase tracking-wider">Best Streak</p>
@@ -361,7 +361,7 @@ export default function App() {
             </div>
           </div>
 
-          {/* 1. Smart Frequency Reminders & Notification Simulator */}
+          {/* 1. Smart Frequency Reminders & Prominently Highlighted Day Switcher */}
           <section className="space-y-2">
             <NotificationBanner 
               currentDayOfWeek={simulatedDay}
@@ -392,26 +392,15 @@ export default function App() {
                   Daily Protocols
                 </span>
                 <h3 className="text-lg font-black text-[#002742]">
-                  {shelfFilter === 'today'
-                    ? `Active Routine for ${DAY_NAMES[simulatedDay]}`
-                    : 'All Routine Shelf Items'}
+                  {shelfFilter === 'due_only'
+                    ? `Due Today on ${DAY_NAMES[simulatedDay]} (${productsScheduledToday.length} Items)`
+                    : `Active Routine Shelf for ${DAY_NAMES[simulatedDay]} (${activeProducts.length} Items)`}
                 </h3>
               </div>
 
-              {/* Shelf Filter Toggle in #005995 */}
+              {/* Shelf Filter Toggle */}
               <div className="flex items-center gap-2 self-start sm:self-auto">
                 <div className="flex items-center p-1 bg-[#DCEEF7] rounded-xl border border-[#005995]/30 text-xs font-bold">
-                  <button
-                    type="button"
-                    onClick={() => setShelfFilter('today')}
-                    className={`px-3 py-1.5 rounded-lg transition-all ${
-                      shelfFilter === 'today'
-                        ? 'bg-[#005995] text-white shadow-sm'
-                        : 'text-[#005995] hover:text-[#00385F]'
-                    }`}
-                  >
-                    Scheduled Today ({productsScheduledToday.length})
-                  </button>
                   <button
                     type="button"
                     onClick={() => setShelfFilter('all')}
@@ -422,6 +411,17 @@ export default function App() {
                     }`}
                   >
                     All Shelf Items ({activeProducts.length})
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setShelfFilter('due_only')}
+                    className={`px-3 py-1.5 rounded-lg transition-all ${
+                      shelfFilter === 'due_only'
+                        ? 'bg-[#005995] text-white shadow-sm'
+                        : 'text-[#005995] hover:text-[#00385F]'
+                    }`}
+                  >
+                    Due Today Only ({productsScheduledToday.length})
                   </button>
                 </div>
 
@@ -437,44 +437,20 @@ export default function App() {
             </div>
 
             {/* List of Product Cards (Each with integrated Science-Backed Daily Boosters as a Dropdown) */}
-            {productsDisplayed.length > 0 ? (
-              <div className="space-y-5">
-                {productsDisplayed.map((product) => (
-                  <ProductCard 
-                    key={product.id}
-                    product={product}
-                    currentDayOfWeek={simulatedDay}
-                    checkedHabits={checkedHabits}
-                    onToggleHabit={handleToggleHabit}
-                    onLogDose={handleLogDose}
-                    onOpenMatchCheck={(prod) => setMatchCheckProduct(prod)}
-                    onOpenDetailModal={(prod) => setDetailModalProduct(prod)}
-                  />
-                ))}
-              </div>
-            ) : (
-              /* Rest day state when no products are scheduled on this day */
-              <div className="p-8 rounded-3xl bg-white border-2 border-[#005995]/30 shadow-warm text-center space-y-3">
-                <div className="w-12 h-12 rounded-2xl bg-[#F0F7FB] flex items-center justify-center mx-auto text-[#005995] border border-[#005995]/30">
-                  <Coffee className="w-6 h-6 text-[#005995]" />
-                </div>
-                <h4 className="text-base font-bold text-[#002742]">
-                  Rest & Barrier Recovery Day
-                </h4>
-                <p className="text-xs text-[#00487A] max-w-md mx-auto leading-relaxed">
-                  No active exfoliants or chemical treatments are scheduled for {DAY_NAMES[simulatedDay]}. Your skin lipid barrier is resting and regenerating. See you on your next scheduled dose!
-                </p>
-                <div className="pt-2">
-                  <button
-                    type="button"
-                    onClick={() => setShelfFilter('all')}
-                    className="text-xs font-bold text-[#005995] hover:underline"
-                  >
-                    View all {activeProducts.length} shelf items →
-                  </button>
-                </div>
-              </div>
-            )}
+            <div className="space-y-5">
+              {productsDisplayed.map((product) => (
+                <ProductCard 
+                  key={product.id}
+                  product={product}
+                  currentDayOfWeek={simulatedDay}
+                  checkedHabits={checkedHabits}
+                  onToggleHabit={handleToggleHabit}
+                  onLogDose={handleLogDose}
+                  onOpenMatchCheck={(prod) => setMatchCheckProduct(prod)}
+                  onOpenDetailModal={(prod) => setDetailModalProduct(prod)}
+                />
+              ))}
+            </div>
           </section>
 
           {/* Educational Clinical Footer Card */}

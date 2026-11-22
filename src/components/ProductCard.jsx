@@ -11,10 +11,11 @@ import {
   CheckCircle2, 
   AlertCircle, 
   ArrowRight, 
-  ShieldCheck,
-  Scale,
-  Atom,
-  Lightbulb
+  ShieldCheck, 
+  Scale, 
+  Atom, 
+  Lightbulb, 
+  Coffee 
 } from 'lucide-react';
 import DepletingBottleSvg from './DepletingBottleSvg';
 import VisualDosageGuide from './VisualDosageGuide';
@@ -73,8 +74,8 @@ export default function ProductCard({
   } else if (!isScheduledToday) {
     statusBadge = {
       text: 'Rest Day (Off Today)',
-      bg: 'bg-white/10 text-white/80 border-white/20',
-      dot: 'bg-white/50'
+      bg: 'bg-white/15 text-white border-white/30 font-bold',
+      dot: 'bg-[#BDE0F1]'
     };
   }
 
@@ -84,10 +85,16 @@ export default function ProductCard({
 
   return (
     <div className={`rounded-3xl border-2 transition-all duration-300 bg-white shadow-warm hover:shadow-warm-lg overflow-hidden ${
-      isLoggedToday ? 'border-[#005995] ring-2 ring-[#005995]/20' : 'border-[#005995]/25 hover:border-[#005995]/50'
+      isLoggedToday 
+        ? 'border-[#005995] ring-2 ring-[#005995]/20' 
+        : isScheduledToday 
+        ? 'border-[#005995]/40 hover:border-[#005995]' 
+        : 'border-dashed border-[#005995]/30 bg-[#F0F7FB]/40'
     }`}>
       {/* Top Banner Bar in Rich Brand #005995 */}
-      <div className="px-5 py-3.5 bg-[#005995] text-white flex flex-wrap items-center justify-between gap-2 shadow-sm">
+      <div className={`px-5 py-3.5 text-white flex flex-wrap items-center justify-between gap-2 shadow-sm ${
+        isScheduledToday ? 'bg-[#005995]' : 'bg-[#00487A]'
+      }`}>
         <div className="flex items-center gap-2">
           {/* Target Frequency Badge */}
           <span className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[11px] font-bold border backdrop-blur-sm ${statusBadge.bg}`}>
@@ -156,6 +163,28 @@ export default function ProductCard({
               </p>
             </div>
 
+            {/* If Today is a Rest Day: Prominently Highlight Rest Status! */}
+            {!isScheduledToday && (
+              <div className="p-3.5 rounded-2xl bg-[#DCEEF7]/80 border-2 border-[#005995]/40 flex items-start gap-3 shadow-sm animate-fade-in">
+                <div className="w-7 h-7 rounded-full bg-[#005995] text-white flex items-center justify-center flex-shrink-0 mt-0.5 shadow-sm">
+                  <Coffee className="w-4 h-4" />
+                </div>
+                <div>
+                  <div className="flex items-center gap-2">
+                    <span className="text-xs font-extrabold text-[#002742]">
+                      Rest & Barrier Recovery Day
+                    </span>
+                    <span className="text-[10px] font-black px-2 py-0.5 rounded-full bg-[#005995] text-white">
+                      Off Today
+                    </span>
+                  </div>
+                  <p className="text-[11px] text-[#00487A] mt-0.5 leading-snug">
+                    This clinical formula is prescribed <strong>{product.frequencyLabel}</strong>. Today is a scheduled rest day to prevent micro-irritation and let your active cellular renewal stabilize.
+                  </p>
+                </div>
+              </div>
+            )}
+
             {/* Expected Results Timeline Milestone in #005995 tint */}
             <div className="p-3.5 rounded-2xl bg-[#F0F7FB] border border-[#005995]/25 space-y-2">
               <div className="flex items-center justify-between text-xs">
@@ -191,7 +220,9 @@ export default function ProductCard({
                 className={`flex-1 py-3 px-4 rounded-xl text-xs font-bold flex items-center justify-center gap-2 shadow-md transition-all duration-200 active:scale-95 ${
                   isLoggedToday 
                     ? 'bg-[#005995] text-white border-2 border-[#00487A] cursor-default'
-                    : 'bg-[#005995] text-white hover:bg-[#00487A] shadow-[#005995]/30'
+                    : isScheduledToday
+                    ? 'bg-[#005995] text-white hover:bg-[#00487A] shadow-[#005995]/30'
+                    : 'bg-[#DCEEF7] text-[#005995] border-2 border-[#005995] hover:bg-[#005995] hover:text-white'
                 }`}
               >
                 {isLoggedToday ? (
@@ -199,10 +230,15 @@ export default function ProductCard({
                     <CheckCircle2 className="w-4 h-4 text-white" />
                     <span>Dose Logged for Today ({product.doseDescription})</span>
                   </>
-                ) : (
+                ) : isScheduledToday ? (
                   <>
                     <Droplet className="w-4 h-4 fill-white" />
                     <span>Log Today's Dose ({product.doseDescription})</span>
+                  </>
+                ) : (
+                  <>
+                    <Coffee className="w-4 h-4" />
+                    <span>Rest Day — No Dose Needed Today (Log Extra if Applied)</span>
                   </>
                 )}
               </button>
