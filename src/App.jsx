@@ -11,8 +11,6 @@ import {
   Flame, 
   ChevronRight, 
   SlidersHorizontal,
-  Smartphone,
-  Monitor,
   HeartHandshake,
   Coffee,
   Check
@@ -29,7 +27,7 @@ import AddProductDrawer from './components/AddProductDrawer';
 import BottleMatchModal from './components/BottleMatchModal';
 import ProductDetailModal from './components/ProductDetailModal';
 
-const STORAGE_KEY = 'bodywise_care_companion_state_v6';
+const STORAGE_KEY = 'bodywise_care_companion_state_v7';
 
 const DAY_NAMES = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
 
@@ -81,9 +79,6 @@ export default function App() {
 
   // Shelf view mode: 'all' (default: nothing disappears, rest days clearly highlighted!) or 'due_only'
   const [shelfFilter, setShelfFilter] = useState('all');
-
-  // Mobile container preview mode toggle ('desktop' | 'mobile-frame')
-  const [viewMode, setViewMode] = useState('desktop');
 
   // Modals & Drawers
   const [isAddDrawerOpen, setIsAddDrawerOpen] = useState(false);
@@ -250,30 +245,26 @@ export default function App() {
         </div>
       )}
 
-      {/* Main Container Wrapper (Responsive / Mobile-frame toggleable) */}
-      <div className={`w-full transition-all duration-300 ${
-        viewMode === 'mobile-frame' 
-          ? 'max-w-md my-6 rounded-[44px] shadow-2xl border-[10px] border-[#002742] bg-[#F0F7FB] overflow-hidden ring-8 ring-[#005995]/20' 
-          : 'max-w-5xl'
-      }`}>
-        {/* ================= HEADER IN PROMINENT BRAND #005995 ================= */}
-        <header className="sticky top-0 z-40 bg-[#005995] text-white border-b-2 border-[#00487A] px-4 sm:px-6 py-4 shadow-md">
+      {/* Main web application container */}
+      <div className="w-full max-w-5xl">
+        {/* ================= HEADER IN CRISP WHITE WITH #005995 ACCENTS ================= */}
+        <header className="sticky top-0 z-40 bg-white border-b-2 border-[#DCEEF7] px-4 sm:px-6 py-3.5 shadow-sm backdrop-blur-md">
           <div className="flex items-center justify-between">
-            {/* Brand Logo & Clinical Subtitle */}
+            {/* Brand Logo & Clinical Subtitle in White Card with Blue Text */}
             <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-2xl bg-white flex items-center justify-center text-[#005995] shadow-sm">
+              <div className="w-10 h-10 rounded-2xl bg-[#DCEEF7] border border-[#005995]/20 flex items-center justify-center text-[#005995] shadow-sm">
                 <ShieldCheck className="w-6 h-6 text-[#005995]" />
               </div>
               <div>
                 <div className="flex items-center gap-2">
-                  <span className="text-xs font-black tracking-widest uppercase text-white">
+                  <span className="text-xs font-black tracking-widest uppercase text-[#005995]">
                     BE BODYWISE
                   </span>
-                  <span className="px-2 py-0.5 rounded-full text-[9px] font-bold bg-white/20 text-white border border-white/30 backdrop-blur-sm">
+                  <span className="px-2 py-0.5 rounded-full text-[9px] font-bold bg-[#DCEEF7] text-[#005995] border border-[#005995]/30">
                     CLINICAL
                   </span>
                 </div>
-                <h1 className="text-base sm:text-lg font-black text-white leading-tight">
+                <h1 className="text-base sm:text-lg font-black text-[#002742] leading-tight">
                   Care Companion
                 </h1>
               </div>
@@ -281,14 +272,14 @@ export default function App() {
 
             {/* Header Right Actions */}
             <div className="flex items-center gap-2 sm:gap-3">
-              {/* Reset Demo Button */}
+              {/* Reset Demo Button in White with Blue Border */}
               <button
                 type="button"
                 onClick={handleResetDemo}
-                className="px-3 py-1.5 rounded-xl border border-white/30 bg-white/10 hover:bg-white/20 text-white text-xs font-bold flex items-center gap-1.5 transition-all shadow-sm backdrop-blur-sm"
+                className="px-3 py-1.5 rounded-xl border-2 border-[#DCEEF7] hover:border-[#005995] bg-white hover:bg-[#F0F7FB] text-[#005995] text-xs font-bold flex items-center gap-1.5 transition-all shadow-sm"
                 title="Reset all routine doses and bottle depletion levels to initial demo state"
               >
-                <RotateCcw className="w-3.5 h-3.5 text-white" />
+                <RotateCcw className="w-3.5 h-3.5 text-[#005995]" />
                 <span className="hidden sm:inline">Reset Demo</span>
               </button>
 
@@ -296,72 +287,49 @@ export default function App() {
               <button
                 type="button"
                 onClick={() => setIsAddDrawerOpen(true)}
-                className="px-3.5 py-1.5 rounded-xl bg-white text-[#005995] hover:bg-[#F0F7FB] text-xs font-extrabold flex items-center gap-1.5 transition-all shadow-md active:scale-95"
+                className="px-3.5 py-1.5 rounded-xl bg-[#005995] hover:bg-[#00487A] text-white text-xs font-extrabold flex items-center gap-1.5 transition-all shadow-md active:scale-95"
               >
                 <Plus className="w-3.5 h-3.5 stroke-[3]" />
                 <span className="hidden sm:inline">Add Item</span>
               </button>
 
-              {/* Viewport Frame Toggle */}
-              <div className="hidden lg:flex items-center border border-white/30 rounded-xl overflow-hidden p-0.5 bg-[#00487A]">
-                <button
-                  type="button"
-                  onClick={() => setViewMode('desktop')}
-                  className={`p-1.5 rounded-lg text-xs transition-colors ${
-                    viewMode === 'desktop' ? 'bg-white text-[#005995] shadow-sm font-bold' : 'text-white/80 hover:text-white'
-                  }`}
-                  title="Full-width Desktop View"
-                >
-                  <Monitor className="w-3.5 h-3.5" />
-                </button>
-                <button
-                  type="button"
-                  onClick={() => setViewMode('mobile-frame')}
-                  className={`p-1.5 rounded-lg text-xs transition-colors ${
-                    viewMode === 'mobile-frame' ? 'bg-white text-[#005995] shadow-sm font-bold' : 'text-white/80 hover:text-white'
-                  }`}
-                  title="Mobile App Viewport Frame"
-                >
-                  <Smartphone className="w-3.5 h-3.5" />
-                </button>
-              </div>
             </div>
           </div>
         </header>
 
         {/* ================= MAIN CONTENT ================= */}
         <main className="p-4 sm:p-6 space-y-6">
-          {/* Welcome & Clinical Intent Hero Banner */}
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 p-5 sm:p-6 rounded-3xl bg-gradient-to-br from-[#005995] via-[#00487A] to-[#00385F] text-white shadow-bodywise border-2 border-[#005995]">
+          {/* Welcome & Clinical Intent Banner in Crisp White with Blue Typography */}
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 p-5 sm:p-6 rounded-3xl bg-white text-[#002742] shadow-warm border-2 border-[#DCEEF7]">
             <div className="space-y-1 max-w-xl">
-              <span className="inline-block text-[11px] font-bold tracking-wider uppercase px-2.5 py-0.5 rounded-full bg-white/20 text-white border border-white/30">
+              <span className="inline-block text-[11px] font-bold tracking-wider uppercase px-2.5 py-0.5 rounded-full bg-[#DCEEF7] text-[#005995] border border-[#005995]/20">
                 Post-Purchase Clinical Companion
               </span>
-              <h2 className="text-xl sm:text-2xl font-black text-white tracking-tight mt-1">
+              <h2 className="text-xl sm:text-2xl font-black text-[#002742] tracking-tight mt-1">
                 Your Routine & Dosage Protocol
               </h2>
-              <p className="text-xs text-white/90 leading-relaxed font-normal">
+              <p className="text-xs text-[#00487A] leading-relaxed font-medium">
                 Formulated actives deliver transformative results when applied at the correct frequency and clinical volume. Track your liquid depletion to prevent under-dosing.
               </p>
             </div>
 
-            {/* Quick summary stats in semi-transparent glass */}
+            {/* Quick summary stats in crisp white/light blue cards */}
             <div className="flex items-center gap-3 self-start sm:self-auto pt-1 sm:pt-0">
-              <div className="px-4 py-2.5 rounded-2xl bg-white/15 backdrop-blur-md border border-white/25 text-center shadow-sm">
-                <p className="text-[10px] font-bold text-white/80 uppercase tracking-wider">Due Today</p>
-                <p className="text-base font-black text-white">{productsScheduledToday.length} of {activeProducts.length} Items</p>
+              <div className="px-4 py-2.5 rounded-2xl bg-[#F0F7FB] border border-[#DCEEF7] text-center shadow-sm">
+                <p className="text-[10px] font-bold text-[#005995] uppercase tracking-wider">Due Today</p>
+                <p className="text-base font-black text-[#002742]">{productsScheduledToday.length} of {activeProducts.length} Items</p>
               </div>
-              <div className="px-4 py-2.5 rounded-2xl bg-white/15 backdrop-blur-md border border-white/25 text-center shadow-sm">
-                <p className="text-[10px] font-bold text-white/80 uppercase tracking-wider">Best Streak</p>
-                <p className="text-base font-black text-white flex items-center justify-center gap-1">
-                  <Flame className="w-4 h-4 fill-white text-white" />
+              <div className="px-4 py-2.5 rounded-2xl bg-[#F0F7FB] border border-[#DCEEF7] text-center shadow-sm">
+                <p className="text-[10px] font-bold text-[#005995] uppercase tracking-wider">Best Streak</p>
+                <p className="text-base font-black text-[#005995] flex items-center justify-center gap-1">
+                  <Flame className="w-4 h-4 fill-[#005995] text-[#005995]" />
                   <span>{Math.max(...activeProducts.map(p => p.streakDays), 0)} Days</span>
                 </p>
               </div>
             </div>
           </div>
 
-          {/* 1. Smart Frequency Reminders & Prominently Highlighted Day Switcher */}
+          {/* 1. Smart Frequency Reminders & Highlighted Day Switcher */}
           <section className="space-y-2">
             <NotificationBanner 
               currentDayOfWeek={simulatedDay}
@@ -400,7 +368,7 @@ export default function App() {
 
               {/* Shelf Filter Toggle */}
               <div className="flex items-center gap-2 self-start sm:self-auto">
-                <div className="flex items-center p-1 bg-[#DCEEF7] rounded-xl border border-[#005995]/30 text-xs font-bold">
+                <div className="flex items-center p-1 bg-white rounded-xl border-2 border-[#DCEEF7] text-xs font-bold shadow-sm">
                   <button
                     type="button"
                     onClick={() => setShelfFilter('all')}
@@ -428,7 +396,7 @@ export default function App() {
                 <button
                   type="button"
                   onClick={() => setIsAddDrawerOpen(true)}
-                  className="text-xs font-bold text-white bg-[#005995] hover:bg-[#00487A] flex items-center gap-1 px-3 py-2 rounded-xl border border-[#005995] transition-colors shadow-sm"
+                  className="text-xs font-bold text-[#005995] hover:text-white bg-white hover:bg-[#005995] flex items-center gap-1 px-3 py-2 rounded-xl border-2 border-[#005995] transition-colors shadow-sm"
                 >
                   <Plus className="w-3.5 h-3.5 stroke-[2.5]" />
                   <span>Add Item</span>
@@ -454,17 +422,17 @@ export default function App() {
           </section>
 
           {/* Educational Clinical Footer Card */}
-          <footer className="p-5 rounded-3xl bg-white border-2 border-[#005995]/20 shadow-warm text-center space-y-2">
-            <div className="w-8 h-8 rounded-full bg-[#005995] flex items-center justify-center mx-auto text-white shadow-sm">
-              <ShieldCheck className="w-4 h-4 text-white" />
+          <footer className="p-5 rounded-3xl bg-white border-2 border-[#DCEEF7] shadow-sm text-center space-y-2">
+            <div className="w-8 h-8 rounded-full bg-[#DCEEF7] flex items-center justify-center mx-auto text-[#005995] border border-[#005995]/20">
+              <ShieldCheck className="w-4 h-4 text-[#005995]" />
             </div>
             <h4 className="text-xs font-bold uppercase tracking-wider text-[#005995]">
               The Be Bodywise Clinical Commitment
             </h4>
-            <p className="text-xs text-[#00487A] max-w-lg mx-auto leading-relaxed">
+            <p className="text-xs text-[#00487A] max-w-lg mx-auto leading-relaxed font-medium">
               Dermatologically tested formulations designed for female physiology. Active ingredients calibrated to deliver clinical cellular turnover over a 4–12 week period.
             </p>
-            <div className="pt-2 text-[11px] text-[#005995] font-semibold">
+            <div className="pt-2 text-[11px] text-[#005995] font-bold">
               Bodywise Care Companion • Interactive Post-Purchase Experience
             </div>
           </footer>
