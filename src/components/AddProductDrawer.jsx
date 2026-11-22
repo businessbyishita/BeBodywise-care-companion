@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
-import { X, Plus, Check, Sparkles, Droplets, Calendar, ShieldCheck, ChevronRight } from 'lucide-react';
+import { X, Plus, Check, Sparkles, Droplets, Calendar, Clock } from 'lucide-react';
 import { PRESET_CATALOG_PRODUCTS } from '../data/products';
-import DepletingBottleSvg from './DepletingBottleSvg';
 
 export default function AddProductDrawer({
   isOpen,
@@ -64,52 +63,56 @@ export default function AddProductDrawer({
                 key={product.id}
                 className="p-4 rounded-2xl bg-white border border-bodywise-200 shadow-warm-sm flex flex-col gap-3 hover:border-bodywise-300 transition-all"
               >
-                <div className="flex items-start gap-3">
-                  {/* Miniature SVG Bottle preview */}
-                  <div className="w-12 h-20 flex-shrink-0">
-                    <DepletingBottleSvg 
-                      type={product.bottleType}
-                      fillPercent={product.initialFillPercent}
-                      liquidColor={product.liquidColor}
-                      accentColor="#005995"
-                      remainingUses={product.remainingUses}
-                      totalApplications={product.totalApplications}
-                      dosePerUseMl={product.dosePerUseMl}
-                      size="sm"
-                    />
-                  </div>
-
-                  {/* Info */}
-                  <div className="flex-1 space-y-1">
-                    <div className="flex items-center gap-1.5">
+                <div className="space-y-3">
+                  <div>
+                    <div className="flex flex-wrap items-center gap-1.5 mb-2">
                       <span className="text-[9px] font-bold uppercase tracking-wider px-1.5 py-0.5 rounded bg-bodywise-100 text-bodywise-800 border border-bodywise-200">
+                        {product.category}
+                      </span>
+                      <span className="text-[10px] text-bodywise-600 font-medium">
                         {product.concern}
                       </span>
-                      <span className="text-[10px] text-bodywise-500 font-medium">
-                        {product.totalVolumeMl} ml
-                      </span>
                     </div>
-
-                    <h4 className="text-xs font-bold text-bodywise-950 leading-snug">
+                    <h4 className="text-sm font-bold text-bodywise-950 leading-snug">
                       {product.name}
                     </h4>
-
-                    <p className="text-[11px] text-bodywise-600 line-clamp-2">
+                    <p className="text-xs text-bodywise-700 mt-1 leading-relaxed">
                       {product.tagline}
                     </p>
+                  </div>
 
-                    <div className="flex items-center gap-2 text-[10px] font-semibold text-bodywise-700 pt-1">
-                      <span className="flex items-center gap-0.5">
-                        <Calendar className="w-3 h-3 text-bodywise-600" />
-                        {product.frequencyLabel}
-                      </span>
-                      <span>•</span>
-                      <span className="flex items-center gap-0.5">
-                        <Droplets className="w-3 h-3 text-bodywise-600" />
-                        {product.visualDosageValue}
-                      </span>
+                  <div className="grid grid-cols-2 gap-2 text-[11px]">
+                    <div className="rounded-xl bg-bodywise-50 border border-bodywise-100 p-2">
+                      <span className="block text-[9px] uppercase tracking-wide text-bodywise-500 font-bold">Size</span>
+                      <span className="font-semibold text-bodywise-900">{product.totalVolumeMl} ml</span>
+                    </div>
+                    <div className="rounded-xl bg-bodywise-50 border border-bodywise-100 p-2">
+                      <span className="block text-[9px] uppercase tracking-wide text-bodywise-500 font-bold">Frequency</span>
+                      <span className="font-semibold text-bodywise-900">{product.frequencyLabel}</span>
+                    </div>
+                    <div className="rounded-xl bg-bodywise-50 border border-bodywise-100 p-2">
+                      <span className="block text-[9px] uppercase tracking-wide text-bodywise-500 font-bold">When to use</span>
+                      <span className="font-semibold text-bodywise-900">{product.timeOfDay}</span>
+                    </div>
+                    <div className="rounded-xl bg-bodywise-50 border border-bodywise-100 p-2">
+                      <span className="block text-[9px] uppercase tracking-wide text-bodywise-500 font-bold">Recommended dose</span>
+                      <span className="font-semibold text-bodywise-900">{product.doseDescription}</span>
                     </div>
                   </div>
+
+                  {product.clinicalTips?.length > 0 && (
+                    <div className="rounded-xl bg-white border border-bodywise-100 p-3">
+                      <p className="text-[10px] font-bold uppercase tracking-wide text-bodywise-600 mb-1.5">Usage information</p>
+                      <ul className="space-y-1.5">
+                        {product.clinicalTips.map((tip, index) => (
+                          <li key={index} className="text-[11px] text-bodywise-700 leading-relaxed flex gap-2">
+                            <span className="text-bodywise-500">•</span>
+                            <span>{tip}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
                 </div>
 
                 {/* Add Button */}
