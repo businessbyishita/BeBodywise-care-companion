@@ -25,40 +25,41 @@ export default function BottleMatchModal({
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-bodywise-950/60 backdrop-blur-sm animate-fade-in">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-[#002742]/70 backdrop-blur-md animate-fade-in">
+      {/* Modal Card with Solid White Background */}
       <div 
-        className="bg-bodywise-50 w-full max-w-lg rounded-3xl shadow-warm-lg border border-bodywise-200 overflow-hidden flex flex-col max-h-[92vh]"
+        className="bg-white w-full max-w-lg rounded-3xl shadow-2xl border-2 border-[#005995] overflow-hidden flex flex-col max-h-[92vh]"
         onClick={(e) => e.stopPropagation()}
       >
-        {/* Header */}
-        <div className="px-6 py-4 border-b border-bodywise-100 flex items-center justify-between bg-white">
-          <div className="flex items-center gap-2">
-            <div className="w-8 h-8 rounded-full bg-bodywise-100 flex items-center justify-center text-bodywise-700">
-              <Scale className="w-4 h-4" />
+        {/* Header in Brand #005995 */}
+        <div className="px-6 py-4 bg-[#005995] text-white flex items-center justify-between shadow-sm">
+          <div className="flex items-center gap-2.5">
+            <div className="w-9 h-9 rounded-2xl bg-white flex items-center justify-center text-[#005995] shadow-sm">
+              <Scale className="w-5 h-5 text-[#005995]" />
             </div>
             <div>
-              <span className="text-[10px] font-bold tracking-wider uppercase text-bodywise-600">Clinical Verification</span>
-              <h3 className="text-base font-bold text-bodywise-950">Physical Bottle Match Check</h3>
+              <span className="text-[10px] font-bold tracking-wider uppercase text-white/80">Clinical Verification</span>
+              <h3 className="text-base font-black text-white">Physical Bottle Match Check</h3>
             </div>
           </div>
           <button 
             type="button" 
             onClick={onClose}
-            className="p-1.5 rounded-full hover:bg-bodywise-100 text-bodywise-700 transition-colors"
+            className="p-1.5 rounded-full hover:bg-white/20 text-white transition-colors"
           >
             <X className="w-5 h-5" />
           </button>
         </div>
 
-        {/* Scrollable Body */}
-        <div className="p-6 overflow-y-auto space-y-6">
-          {/* Main Visual Comparison Box */}
-          <div className="p-5 rounded-2xl bg-white border border-bodywise-200 shadow-warm-sm flex flex-col sm:flex-row items-center gap-6">
-            <div className="flex-shrink-0">
+        {/* Scrollable Body on Solid White */}
+        <div className="p-6 overflow-y-auto space-y-6 bg-white">
+          {/* Main Visual Comparison Box on Solid White with #005995 Border */}
+          <div className="p-5 rounded-2xl bg-white border-2 border-[#005995]/30 shadow-md flex flex-col sm:flex-row items-center gap-6">
+            <div className="flex-shrink-0 p-3 rounded-2xl bg-[#F0F7FB] border border-[#005995]/20 shadow-sm flex items-center justify-center">
               <DepletingBottleSvg 
                 type={product.bottleType}
                 fillPercent={showCalibrate ? customPercent : product.currentFillPercent}
-                liquidColor={product.liquidColor}
+                liquidColor="rgba(0, 89, 149, 0.55)"
                 accentColor="#005995"
                 remainingUses={product.remainingUses}
                 totalApplications={product.totalApplications}
@@ -68,22 +69,22 @@ export default function BottleMatchModal({
             </div>
 
             <div className="flex-1 space-y-2 text-center sm:text-left">
-              <div className="inline-block px-2.5 py-0.5 rounded-full text-xs font-semibold bg-bodywise-100 text-bodywise-800 border border-bodywise-200">
+              <div className="inline-block px-3 py-1 rounded-full text-xs font-black bg-[#005995] text-white shadow-sm">
                 Current App Tracker: {product.currentFillPercent}% Full
               </div>
-              <h4 className="text-sm font-bold text-bodywise-950">
+              <h4 className="text-sm font-black text-[#002742]">
                 Does your physical bathroom bottle look roughly this full?
               </h4>
-              <p className="text-xs text-bodywise-700 leading-relaxed">
+              <p className="text-xs text-[#00487A] leading-relaxed font-medium">
                 Be Bodywise clinical formulas are measured to deliver maximum biological turnover within a <strong>{product.cycleWeeksTotal}-week cycle</strong>. Checking your physical fluid level ensures you aren't under-applying or rationing doses.
               </p>
             </div>
           </div>
 
-          {/* Interactive User Choices */}
+          {/* Interactive User Choices on Solid White */}
           {!selectedMatch ? (
             <div className="space-y-3">
-              <p className="text-xs font-bold text-bodywise-800 uppercase tracking-wider">
+              <p className="text-xs font-black text-[#002742] uppercase tracking-wider">
                 Select what best describes your bottle right now:
               </p>
 
@@ -91,16 +92,16 @@ export default function BottleMatchModal({
               <button
                 type="button"
                 onClick={() => handleMatchSelect('matched')}
-                className="w-full text-left p-4 rounded-xl border border-bodywise-200 bg-white hover:border-bodywise-400 hover:bg-bodywise-50 transition-all flex items-start gap-3.5 group shadow-sm"
+                className="w-full text-left p-4 rounded-xl border-2 border-[#005995]/30 bg-white hover:border-[#005995] hover:bg-[#F0F7FB] transition-all flex items-start gap-3.5 group shadow-sm"
               >
-                <div className="w-7 h-7 rounded-full bg-bodywise-100 text-bodywise-700 flex items-center justify-center flex-shrink-0 mt-0.5 group-hover:scale-110 transition-transform">
-                  <CheckCircle2 className="w-4 h-4" />
+                <div className="w-8 h-8 rounded-full bg-[#005995] text-white flex items-center justify-center flex-shrink-0 mt-0.5 shadow-sm group-hover:scale-110 transition-transform">
+                  <CheckCircle2 className="w-5 h-5 text-white" />
                 </div>
                 <div>
-                  <p className="text-xs font-bold text-bodywise-950 group-hover:text-bodywise-700">
+                  <p className="text-xs font-black text-[#002742] group-hover:text-[#005995]">
                     Yes, it matches roughly! (~{product.currentFillPercent}% full)
                   </p>
-                  <p className="text-[11px] text-bodywise-600 mt-0.5">
+                  <p className="text-[11px] text-[#00487A] mt-0.5 font-medium">
                     You are applying the exact clinical amount ({product.doseDescription}). On track for expected results!
                   </p>
                 </div>
@@ -110,16 +111,16 @@ export default function BottleMatchModal({
               <button
                 type="button"
                 onClick={() => handleMatchSelect('fuller')}
-                className="w-full text-left p-4 rounded-xl border border-bodywise-200 bg-white hover:border-bodywise-400 hover:bg-bodywise-50 transition-all flex items-start gap-3.5 group shadow-sm"
+                className="w-full text-left p-4 rounded-xl border-2 border-[#005995]/30 bg-white hover:border-[#005995] hover:bg-[#F0F7FB] transition-all flex items-start gap-3.5 group shadow-sm"
               >
-                <div className="w-7 h-7 rounded-full bg-bodywise-100 text-bodywise-800 flex items-center justify-center flex-shrink-0 mt-0.5 group-hover:scale-110 transition-transform">
-                  <AlertTriangle className="w-4 h-4 text-bodywise-700" />
+                <div className="w-8 h-8 rounded-full bg-[#DCEEF7] text-[#005995] border border-[#005995]/30 flex items-center justify-center flex-shrink-0 mt-0.5 shadow-sm group-hover:scale-110 transition-transform">
+                  <AlertTriangle className="w-5 h-5 text-[#005995]" />
                 </div>
                 <div>
-                  <p className="text-xs font-bold text-bodywise-950 group-hover:text-bodywise-700">
+                  <p className="text-xs font-black text-[#002742] group-hover:text-[#005995]">
                     No, my physical bottle is noticeably fuller! (I might be rationing)
                   </p>
-                  <p className="text-[11px] text-bodywise-600 mt-0.5">
+                  <p className="text-[11px] text-[#00487A] mt-0.5 font-medium">
                     You may be hesitant or applying tiny micro-drops that fall below the active threshold.
                   </p>
                 </div>
@@ -129,59 +130,59 @@ export default function BottleMatchModal({
               <button
                 type="button"
                 onClick={() => handleMatchSelect('emptier')}
-                className="w-full text-left p-4 rounded-xl border border-bodywise-200 bg-white hover:border-bodywise-400 hover:bg-bodywise-50 transition-all flex items-start gap-3.5 group shadow-sm"
+                className="w-full text-left p-4 rounded-xl border-2 border-[#005995]/30 bg-white hover:border-[#005995] hover:bg-[#F0F7FB] transition-all flex items-start gap-3.5 group shadow-sm"
               >
-                <div className="w-7 h-7 rounded-full bg-bodywise-100 text-bodywise-700 flex items-center justify-center flex-shrink-0 mt-0.5 group-hover:scale-110 transition-transform">
-                  <ArrowRight className="w-4 h-4" />
+                <div className="w-8 h-8 rounded-full bg-[#F0F7FB] text-[#005995] border border-[#005995]/30 flex items-center justify-center flex-shrink-0 mt-0.5 shadow-sm group-hover:scale-110 transition-transform">
+                  <ArrowRight className="w-5 h-5 text-[#005995]" />
                 </div>
                 <div>
-                  <p className="text-xs font-bold text-bodywise-950">
+                  <p className="text-xs font-black text-[#002742] group-hover:text-[#005995]">
                     No, my bottle is noticeably emptier than this!
                   </p>
-                  <p className="text-[11px] text-bodywise-600 mt-0.5">
+                  <p className="text-[11px] text-[#00487A] mt-0.5 font-medium">
                     You may be applying extra or sharing with a sibling or partner.
                   </p>
                 </div>
               </button>
             </div>
           ) : (
-            /* Selected Feedback Card */
-            <div className="space-y-4 animate-fade-in">
+            /* Selected Feedback Card on Solid White */
+            <div className="space-y-4 animate-fade-in bg-white">
               {selectedMatch === 'matched' && (
-                <div className="p-4 rounded-2xl bg-bodywise-50 border border-bodywise-300 space-y-2">
-                  <div className="flex items-center gap-2 text-bodywise-900 font-bold text-sm">
-                    <CheckCircle2 className="w-5 h-5 text-bodywise-600" />
+                <div className="p-4 rounded-2xl bg-[#F0F7FB] border-2 border-[#005995] space-y-2">
+                  <div className="flex items-center gap-2 text-[#005995] font-extrabold text-sm">
+                    <CheckCircle2 className="w-5 h-5 text-[#005995]" />
                     <span>Clinical Dosage Calibration: Optimal!</span>
                   </div>
-                  <p className="text-xs text-bodywise-800 leading-relaxed">
+                  <p className="text-xs text-[#002742] leading-relaxed font-medium">
                     Great job! Your current depletion rate reflects consistent therapeutic dosing ({product.doseDescription}). At this rate, your skin is absorbing the target concentration required for Week {product.currentWeek} cellular milestones.
                   </p>
                 </div>
               )}
 
               {selectedMatch === 'fuller' && (
-                <div className="p-4 rounded-2xl bg-bodywise-50 border border-bodywise-300 space-y-3">
-                  <div className="flex items-center gap-2 text-bodywise-900 font-bold text-sm">
-                    <AlertTriangle className="w-5 h-5 text-bodywise-600 flex-shrink-0" />
+                <div className="p-4 rounded-2xl bg-[#F0F7FB] border-2 border-[#005995] space-y-3">
+                  <div className="flex items-center gap-2 text-[#005995] font-extrabold text-sm">
+                    <AlertTriangle className="w-5 h-5 text-[#005995] flex-shrink-0" />
                     <span>Clinical Alert: You May Be Rationing Your Active Ingredients</span>
                   </div>
-                  <p className="text-xs text-bodywise-800 leading-relaxed font-medium">
+                  <p className="text-xs text-[#002742] leading-relaxed font-semibold">
                     Because active molecules like <strong>{product.name}</strong> operate on a concentration gradient, under-applying causes the formulation to dry or wash off before penetrating into the dermis.
                   </p>
-                  <div className="p-3 bg-white rounded-xl border border-bodywise-200 text-xs text-bodywise-800">
-                    <strong className="text-bodywise-900">Recommended Action for Tomorrow: </strong>
-                    Ensure you apply the full recommended dose: <span className="font-semibold text-bodywise-950">{product.doseDescription}</span>. Don't worry about "running out quickly" — each bottle is specifically filled to last the full <strong>{product.cycleWeeksTotal}-week treatment cycle</strong>.
+                  <div className="p-3 bg-white rounded-xl border border-[#005995]/30 text-xs text-[#00385F]">
+                    <strong className="text-[#005995]">Recommended Action for Tomorrow: </strong>
+                    Ensure you apply the full recommended dose: <span className="font-extrabold text-[#002742]">{product.doseDescription}</span>. Don't worry about "running out quickly" — each bottle is specifically filled to last the full <strong>{product.cycleWeeksTotal}-week treatment cycle</strong>.
                   </div>
                 </div>
               )}
 
               {selectedMatch === 'emptier' && (
-                <div className="p-4 rounded-2xl bg-bodywise-50 border border-bodywise-200 space-y-2">
-                  <div className="flex items-center gap-2 text-bodywise-900 font-bold text-sm">
-                    <HelpCircle className="w-5 h-5 text-bodywise-600" />
+                <div className="p-4 rounded-2xl bg-[#F0F7FB] border-2 border-[#005995] space-y-2">
+                  <div className="flex items-center gap-2 text-[#005995] font-extrabold text-sm">
+                    <HelpCircle className="w-5 h-5 text-[#005995]" />
                     <span>High Depletion Rate Noted</span>
                   </div>
-                  <p className="text-xs text-bodywise-800 leading-relaxed">
+                  <p className="text-xs text-[#002742] leading-relaxed font-medium">
                     Applying more than <strong>{product.dosePerUseMl} ml</strong> per dose won't speed up cellular results and might cause unnecessary skin sensitivity. Stick to the prescribed {product.doseDescription} so your supply lasts through the expected clinical milestone at Week {product.cycleWeeksTotal}.
                   </p>
                 </div>
@@ -192,7 +193,7 @@ export default function BottleMatchModal({
                 <button
                   type="button"
                   onClick={() => setSelectedMatch(null)}
-                  className="text-xs text-bodywise-600 hover:text-bodywise-900 underline font-medium"
+                  className="text-xs text-[#005995] hover:text-[#00385F] underline font-bold"
                 >
                   ← Pick another observation
                 </button>
@@ -200,19 +201,19 @@ export default function BottleMatchModal({
                 <button
                   type="button"
                   onClick={() => setShowCalibrate(!showCalibrate)}
-                  className="text-xs text-bodywise-700 hover:text-bodywise-900 font-semibold flex items-center gap-1"
+                  className="text-xs text-[#005995] hover:text-[#00385F] font-extrabold flex items-center gap-1"
                 >
-                  <RefreshCw className="w-3.5 h-3.5" />
+                  <RefreshCw className="w-3.5 h-3.5 text-[#005995]" />
                   {showCalibrate ? 'Hide Calibration' : 'Calibrate Virtual Level'}
                 </button>
               </div>
 
-              {/* Calibration Slider */}
+              {/* Calibration Slider on Solid White */}
               {showCalibrate && (
-                <div className="p-4 rounded-xl bg-white border border-bodywise-200 space-y-3 animate-fade-in">
+                <div className="p-4 rounded-xl bg-white border-2 border-[#005995]/30 space-y-3 animate-fade-in shadow-sm">
                   <div className="flex justify-between items-center text-xs">
-                    <span className="font-semibold text-bodywise-800">Set Exact Physical Level:</span>
-                    <span className="font-bold text-bodywise-700">{customPercent}% Full</span>
+                    <span className="font-bold text-[#002742]">Set Exact Physical Level:</span>
+                    <span className="font-black text-[#005995] text-sm">{customPercent}% Full</span>
                   </div>
                   <input 
                     type="range"
@@ -221,12 +222,12 @@ export default function BottleMatchModal({
                     step="5"
                     value={customPercent}
                     onChange={(e) => setCustomPercent(Number(e.target.value))}
-                    className="w-full accent-bodywise-600 cursor-pointer"
+                    className="w-full accent-[#005995] cursor-pointer"
                   />
                   <button
                     type="button"
                     onClick={handleSaveCalibration}
-                    className="w-full py-2 bg-bodywise-600 text-white rounded-lg text-xs font-bold hover:bg-bodywise-700 transition-colors shadow-sm"
+                    className="w-full py-2.5 bg-[#005995] text-white rounded-lg text-xs font-bold hover:bg-[#00487A] transition-colors shadow-sm"
                   >
                     Sync Virtual Bottle to {customPercent}%
                   </button>
@@ -236,12 +237,12 @@ export default function BottleMatchModal({
           )}
         </div>
 
-        {/* Footer */}
-        <div className="px-6 py-4 bg-white border-t border-bodywise-100 flex justify-end">
+        {/* Footer in Solid White */}
+        <div className="px-6 py-4 bg-white border-t-2 border-[#DCEEF7] flex justify-end">
           <button
             type="button"
             onClick={onClose}
-            className="px-5 py-2.5 rounded-xl bg-bodywise-600 text-white text-xs font-bold hover:bg-bodywise-700 transition-colors shadow-warm-sm"
+            className="px-6 py-2.5 rounded-xl bg-[#005995] text-white text-xs font-bold hover:bg-[#00487A] transition-colors shadow-md"
           >
             Done & Return to Routine
           </button>
