@@ -29,7 +29,7 @@ import AddProductDrawer from './components/AddProductDrawer';
 import BottleMatchModal from './components/BottleMatchModal';
 import ProductDetailModal from './components/ProductDetailModal';
 
-const STORAGE_KEY = 'bodywise_care_companion_state_v3';
+const STORAGE_KEY = 'bodywise_care_companion_state_v4';
 
 const DAY_NAMES = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
 
@@ -137,18 +137,18 @@ export default function App() {
       };
     }));
 
-    // Trigger celebratory confetti
+    // Trigger celebratory confetti in #005995 brand shades and white
     try {
       confetti({
-        particleCount: 45,
+        particleCount: 50,
         spread: 60,
         origin: { y: 0.7 },
-        colors: ['#E87A64', '#4D7C6F', '#FAF8F5']
+        colors: ['#005995', '#4DA8D5', '#FFFFFF', '#DCEEF7']
       });
     } catch (e) {}
 
     const targetProduct = activeProducts.find(p => p.id === productId);
-    triggerToast(`Logged dose for ${targetProduct?.shortName || 'product'}! Liquid dropped by ${targetProduct?.dosePerUseMl || 0.5} ml.`);
+    triggerToast(`Logged dose for ${targetProduct?.shortName || 'item'}! Liquid dropped by ${targetProduct?.dosePerUseMl || 0.5} ml.`);
 
     // Prompt the Bottle Match Check modal after a brief pause so user watches the fluid drop
     setTimeout(() => {
@@ -171,16 +171,16 @@ export default function App() {
         [habitId]: !prev[habitId]
       };
       if (nextState[habitId]) {
-        triggerToast('Micro-habit checked! Daily readiness boosted.');
+        triggerToast('Daily booster checked! Readiness boosted.');
       }
       return nextState;
     });
   };
 
-  // 3. Add SKU to active shelf
+  // 3. Add item to active shelf
   const handleAddProduct = (newProduct) => {
     if (activeProducts.some(p => p.id === newProduct.id)) {
-      triggerToast('Product is already active on your shelf!');
+      triggerToast('Item is already active on your shelf!');
       return;
     }
     setActiveProducts(prev => [newProduct, ...prev]);
@@ -241,11 +241,11 @@ export default function App() {
   });
 
   return (
-    <div className="min-h-screen bg-cream-100 text-charcoal-800 flex flex-col items-center">
+    <div className="min-h-screen bg-[#F0F7FB] text-bodywise-900 flex flex-col items-center">
       {/* Toast Notification */}
       {toastMessage && (
-        <div className="fixed bottom-6 right-6 z-50 bg-charcoal-900 text-white px-4 py-3 rounded-2xl shadow-warm-lg border border-charcoal-700 text-xs font-semibold flex items-center gap-2 animate-fade-in">
-          <Sparkles className="w-4 h-4 text-terracotta-400" />
+        <div className="fixed bottom-6 right-6 z-50 bg-bodywise-900 text-white px-4 py-3 rounded-2xl shadow-warm-lg border border-bodywise-700 text-xs font-semibold flex items-center gap-2 animate-fade-in">
+          <Sparkles className="w-4 h-4 text-bodywise-300" />
           <span>{toastMessage}</span>
         </div>
       )}
@@ -253,27 +253,27 @@ export default function App() {
       {/* Main Container Wrapper (Responsive / Mobile-frame toggleable) */}
       <div className={`w-full transition-all duration-300 ${
         viewMode === 'mobile-frame' 
-          ? 'max-w-md my-6 rounded-[44px] shadow-2xl border-[10px] border-charcoal-800 bg-cream-100 overflow-hidden ring-8 ring-charcoal-700/20' 
+          ? 'max-w-md my-6 rounded-[44px] shadow-2xl border-[10px] border-bodywise-900 bg-[#F0F7FB] overflow-hidden ring-8 ring-bodywise-800/20' 
           : 'max-w-5xl'
       }`}>
         {/* ================= HEADER ================= */}
-        <header className="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-cream-200 px-4 sm:px-6 py-3.5 shadow-warm-sm">
+        <header className="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-bodywise-200 px-4 sm:px-6 py-3.5 shadow-warm-sm">
           <div className="flex items-center justify-between">
-            {/* Brand Logo & Clinical Subtitle */}
+            {/* Brand Logo & Clinical Subtitle in #005995 */}
             <div className="flex items-center gap-3">
-              <div className="w-9 h-9 rounded-2xl bg-gradient-to-tr from-terracotta-500 to-terracotta-400 flex items-center justify-center text-white shadow-terracotta">
+              <div className="w-9 h-9 rounded-2xl bg-bodywise-600 flex items-center justify-center text-white shadow-warm">
                 <ShieldCheck className="w-5 h-5" />
               </div>
               <div>
                 <div className="flex items-center gap-1.5">
-                  <span className="text-xs font-black tracking-widest uppercase text-terracotta-600">
+                  <span className="text-xs font-black tracking-widest uppercase text-bodywise-600">
                     BE BODYWISE
                   </span>
-                  <span className="px-1.5 py-0.2 rounded text-[9px] font-bold bg-cream-200 text-charcoal-600">
+                  <span className="px-1.5 py-0.2 rounded text-[9px] font-bold bg-bodywise-100 text-bodywise-800 border border-bodywise-200">
                     CLINICAL
                   </span>
                 </div>
-                <h1 className="text-sm sm:text-base font-extrabold text-charcoal-900 leading-none">
+                <h1 className="text-sm sm:text-base font-extrabold text-bodywise-950 leading-none">
                   Care Companion
                 </h1>
               </div>
@@ -285,30 +285,30 @@ export default function App() {
               <button
                 type="button"
                 onClick={handleResetDemo}
-                className="px-2.5 sm:px-3 py-1.5 rounded-xl border border-cream-300 bg-cream-50 hover:bg-cream-200 text-charcoal-700 text-xs font-bold flex items-center gap-1.5 transition-colors shadow-sm"
+                className="px-2.5 sm:px-3 py-1.5 rounded-xl border border-bodywise-300 bg-bodywise-50 hover:bg-bodywise-100 text-bodywise-800 text-xs font-bold flex items-center gap-1.5 transition-colors shadow-sm"
                 title="Reset all routine doses and bottle depletion levels to initial demo state"
               >
-                <RotateCcw className="w-3.5 h-3.5 text-terracotta-600" />
+                <RotateCcw className="w-3.5 h-3.5 text-bodywise-600" />
                 <span className="hidden sm:inline">Reset Demo</span>
               </button>
 
-              {/* + Add Product Button */}
+              {/* + Add Item Button */}
               <button
                 type="button"
                 onClick={() => setIsAddDrawerOpen(true)}
-                className="px-3 py-1.5 rounded-xl bg-terracotta-500 hover:bg-terracotta-600 text-white text-xs font-bold flex items-center gap-1.5 transition-colors shadow-terracotta"
+                className="px-3 py-1.5 rounded-xl bg-bodywise-600 hover:bg-bodywise-700 text-white text-xs font-bold flex items-center gap-1.5 transition-colors shadow-warm"
               >
                 <Plus className="w-3.5 h-3.5 stroke-[2.5]" />
-                <span className="hidden sm:inline">Add Product</span>
+                <span className="hidden sm:inline">Add Item</span>
               </button>
 
               {/* Viewport Frame Toggle */}
-              <div className="hidden lg:flex items-center border border-cream-300 rounded-xl overflow-hidden p-0.5 bg-cream-100">
+              <div className="hidden lg:flex items-center border border-bodywise-200 rounded-xl overflow-hidden p-0.5 bg-bodywise-50">
                 <button
                   type="button"
                   onClick={() => setViewMode('desktop')}
                   className={`p-1.5 rounded-lg text-xs transition-colors ${
-                    viewMode === 'desktop' ? 'bg-white text-charcoal-900 shadow-sm' : 'text-charcoal-500 hover:text-charcoal-800'
+                    viewMode === 'desktop' ? 'bg-white text-bodywise-900 shadow-sm' : 'text-bodywise-600 hover:text-bodywise-900'
                   }`}
                   title="Full-width Desktop View"
                 >
@@ -318,7 +318,7 @@ export default function App() {
                   type="button"
                   onClick={() => setViewMode('mobile-frame')}
                   className={`p-1.5 rounded-lg text-xs transition-colors ${
-                    viewMode === 'mobile-frame' ? 'bg-white text-charcoal-900 shadow-sm' : 'text-charcoal-500 hover:text-charcoal-800'
+                    viewMode === 'mobile-frame' ? 'bg-white text-bodywise-900 shadow-sm' : 'text-bodywise-600 hover:text-bodywise-900'
                   }`}
                   title="Mobile App Viewport Frame"
                 >
@@ -332,29 +332,29 @@ export default function App() {
         {/* ================= MAIN CONTENT ================= */}
         <main className="p-4 sm:p-6 space-y-6">
           {/* Welcome & Clinical Intent Banner (Strictly Privacy-Preserving) */}
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 p-4 sm:p-5 rounded-3xl bg-gradient-to-r from-white via-cream-50 to-white border border-cream-300 shadow-warm">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 p-4 sm:p-5 rounded-3xl bg-white border border-bodywise-200 shadow-warm">
             <div>
-              <span className="text-[11px] font-bold tracking-wider uppercase text-terracotta-600">
+              <span className="text-[11px] font-bold tracking-wider uppercase text-bodywise-600">
                 Post-Purchase Clinical Companion
               </span>
-              <h2 className="text-xl sm:text-2xl font-black text-charcoal-900 tracking-tight mt-0.5">
+              <h2 className="text-xl sm:text-2xl font-black text-bodywise-950 tracking-tight mt-0.5">
                 Your Routine & Dosage Protocol
               </h2>
-              <p className="text-xs text-charcoal-600 mt-1 max-w-xl leading-relaxed">
+              <p className="text-xs text-bodywise-700 mt-1 max-w-xl leading-relaxed">
                 Formulated actives deliver transformative results when applied at the correct frequency and clinical volume. Track your liquid depletion to prevent under-dosing.
               </p>
             </div>
 
             {/* Quick summary stats */}
             <div className="flex items-center gap-3 self-start sm:self-auto pt-1 sm:pt-0">
-              <div className="px-3.5 py-2 rounded-2xl bg-white border border-cream-200 text-center shadow-warm-sm">
-                <p className="text-[10px] font-bold text-charcoal-500 uppercase tracking-wider">Scheduled Today</p>
-                <p className="text-sm font-extrabold text-charcoal-900">{productsScheduledToday.length} Products</p>
+              <div className="px-3.5 py-2 rounded-2xl bg-bodywise-50 border border-bodywise-200 text-center shadow-warm-sm">
+                <p className="text-[10px] font-bold text-bodywise-600 uppercase tracking-wider">Scheduled Today</p>
+                <p className="text-sm font-extrabold text-bodywise-950">{productsScheduledToday.length} Items</p>
               </div>
-              <div className="px-3.5 py-2 rounded-2xl bg-white border border-cream-200 text-center shadow-warm-sm">
-                <p className="text-[10px] font-bold text-charcoal-500 uppercase tracking-wider">Best Streak</p>
-                <p className="text-sm font-extrabold text-amber-600 flex items-center justify-center gap-0.5">
-                  <Flame className="w-3.5 h-3.5 fill-amber-500" />
+              <div className="px-3.5 py-2 rounded-2xl bg-bodywise-50 border border-bodywise-200 text-center shadow-warm-sm">
+                <p className="text-[10px] font-bold text-bodywise-600 uppercase tracking-wider">Best Streak</p>
+                <p className="text-sm font-extrabold text-bodywise-600 flex items-center justify-center gap-0.5">
+                  <Flame className="w-3.5 h-3.5 fill-bodywise-600" />
                   <span>{Math.max(...activeProducts.map(p => p.streakDays), 0)} Days</span>
                 </p>
               </div>
@@ -388,26 +388,26 @@ export default function App() {
           <section className="space-y-4">
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
               <div>
-                <span className="text-[10px] font-bold uppercase tracking-wider text-charcoal-500">
+                <span className="text-[10px] font-bold uppercase tracking-wider text-bodywise-600">
                   Daily Protocols
                 </span>
-                <h3 className="text-lg font-bold text-charcoal-900">
+                <h3 className="text-lg font-bold text-bodywise-950">
                   {shelfFilter === 'today'
                     ? `Active Routine for ${DAY_NAMES[simulatedDay]}`
-                    : 'All Routine Shelf Products'}
+                    : 'All Routine Shelf Items'}
                 </h3>
               </div>
 
-              {/* Shelf Filter Toggle */}
+              {/* Shelf Filter Toggle (Updated wording from SKUs to items) */}
               <div className="flex items-center gap-2 self-start sm:self-auto">
-                <div className="flex items-center p-0.5 bg-cream-200/80 rounded-xl border border-cream-300 text-xs font-bold">
+                <div className="flex items-center p-0.5 bg-bodywise-100 rounded-xl border border-bodywise-200 text-xs font-bold">
                   <button
                     type="button"
                     onClick={() => setShelfFilter('today')}
                     className={`px-3 py-1.5 rounded-lg transition-all ${
                       shelfFilter === 'today'
-                        ? 'bg-white text-charcoal-900 shadow-sm'
-                        : 'text-charcoal-600 hover:text-charcoal-800'
+                        ? 'bg-bodywise-600 text-white shadow-sm'
+                        : 'text-bodywise-700 hover:text-bodywise-900'
                     }`}
                   >
                     Scheduled Today ({productsScheduledToday.length})
@@ -417,26 +417,26 @@ export default function App() {
                     onClick={() => setShelfFilter('all')}
                     className={`px-3 py-1.5 rounded-lg transition-all ${
                       shelfFilter === 'all'
-                        ? 'bg-white text-charcoal-900 shadow-sm'
-                        : 'text-charcoal-600 hover:text-charcoal-800'
+                        ? 'bg-bodywise-600 text-white shadow-sm'
+                        : 'text-bodywise-700 hover:text-bodywise-900'
                     }`}
                   >
-                    All Shelf SKUs ({activeProducts.length})
+                    All Shelf Items ({activeProducts.length})
                   </button>
                 </div>
 
                 <button
                   type="button"
                   onClick={() => setIsAddDrawerOpen(true)}
-                  className="text-xs font-bold text-terracotta-600 hover:text-terracotta-700 flex items-center gap-1 px-2.5 py-1.5 rounded-xl border border-cream-300 bg-white hover:bg-cream-50 transition-colors shadow-sm"
+                  className="text-xs font-bold text-bodywise-600 hover:text-bodywise-800 flex items-center gap-1 px-2.5 py-1.5 rounded-xl border border-bodywise-200 bg-white hover:bg-bodywise-50 transition-colors shadow-sm"
                 >
                   <Plus className="w-3.5 h-3.5" />
-                  <span>Add SKU</span>
+                  <span>Add Item</span>
                 </button>
               </div>
             </div>
 
-            {/* List of Product Cards (Each with integrated Science-Backed Daily Boosters) */}
+            {/* List of Product Cards (Each with integrated Science-Backed Daily Boosters as a Dropdown) */}
             {productsDisplayed.length > 0 ? (
               <div className="space-y-5">
                 {productsDisplayed.map((product) => (
@@ -454,23 +454,23 @@ export default function App() {
               </div>
             ) : (
               /* Rest day state when no products are scheduled on this day */
-              <div className="p-8 rounded-3xl bg-white border border-cream-300 shadow-warm text-center space-y-3">
-                <div className="w-12 h-12 rounded-2xl bg-cream-100 flex items-center justify-center mx-auto text-charcoal-500">
-                  <Coffee className="w-6 h-6 text-terracotta-500" />
+              <div className="p-8 rounded-3xl bg-white border border-bodywise-200 shadow-warm text-center space-y-3">
+                <div className="w-12 h-12 rounded-2xl bg-bodywise-50 flex items-center justify-center mx-auto text-bodywise-600 border border-bodywise-200">
+                  <Coffee className="w-6 h-6 text-bodywise-600" />
                 </div>
-                <h4 className="text-base font-bold text-charcoal-800">
+                <h4 className="text-base font-bold text-bodywise-950">
                   Rest & Barrier Recovery Day
                 </h4>
-                <p className="text-xs text-charcoal-600 max-w-md mx-auto leading-relaxed">
+                <p className="text-xs text-bodywise-700 max-w-md mx-auto leading-relaxed">
                   No active exfoliants or chemical treatments are scheduled for {DAY_NAMES[simulatedDay]}. Your skin lipid barrier is resting and regenerating. See you on your next scheduled dose!
                 </p>
                 <div className="pt-2">
                   <button
                     type="button"
                     onClick={() => setShelfFilter('all')}
-                    className="text-xs font-bold text-terracotta-600 hover:underline"
+                    className="text-xs font-bold text-bodywise-600 hover:underline"
                   >
-                    View all {activeProducts.length} shelf products →
+                    View all {activeProducts.length} shelf items →
                   </button>
                 </div>
               </div>
@@ -478,17 +478,17 @@ export default function App() {
           </section>
 
           {/* Educational Clinical Footer Card */}
-          <footer className="p-5 rounded-3xl bg-white border border-cream-300 shadow-warm text-center space-y-2">
-            <div className="w-8 h-8 rounded-full bg-cream-200 flex items-center justify-center mx-auto text-charcoal-600">
-              <ShieldCheck className="w-4 h-4 text-terracotta-500" />
+          <footer className="p-5 rounded-3xl bg-white border border-bodywise-200 shadow-warm text-center space-y-2">
+            <div className="w-8 h-8 rounded-full bg-bodywise-50 flex items-center justify-center mx-auto text-bodywise-600 border border-bodywise-200">
+              <ShieldCheck className="w-4 h-4 text-bodywise-600" />
             </div>
-            <h4 className="text-xs font-bold uppercase tracking-wider text-charcoal-800">
+            <h4 className="text-xs font-bold uppercase tracking-wider text-bodywise-900">
               The Be Bodywise Clinical Commitment
             </h4>
-            <p className="text-xs text-charcoal-600 max-w-lg mx-auto leading-relaxed">
+            <p className="text-xs text-bodywise-700 max-w-lg mx-auto leading-relaxed">
               Dermatologically tested formulations designed for female physiology. Active ingredients calibrated to deliver clinical cellular turnover over a 4–12 week period.
             </p>
-            <div className="pt-2 text-[11px] text-charcoal-400 font-medium">
+            <div className="pt-2 text-[11px] text-bodywise-500 font-medium">
               Bodywise Care Companion • Interactive Post-Purchase Experience
             </div>
           </footer>

@@ -4,7 +4,7 @@ export const SCIENCE_HABITS_BY_CONCERN = {
   'underarms': {
     concernName: 'Underarm Pigmentation & Odor',
     badge: 'Acanthosis & Odor Control',
-    color: '#E87A64',
+    color: '#005995',
     habits: [
       {
         id: 'habit-dry-60s',
@@ -35,7 +35,7 @@ export const SCIENCE_HABITS_BY_CONCERN = {
   'body-acne': {
     concernName: 'Body Acne & Keratosis Pilaris (KP)',
     badge: 'Follicular Clearance',
-    color: '#4D7C6F',
+    color: '#00487A',
     habits: [
       {
         id: 'habit-rinse-conditioner-first',
@@ -66,7 +66,7 @@ export const SCIENCE_HABITS_BY_CONCERN = {
   'hair-fall': {
     concernName: 'Hair Fall & Thinning',
     badge: 'Anagen Activation & Scalp Microcirculation',
-    color: '#D25E47',
+    color: '#005995',
     habits: [
       {
         id: 'habit-scalp-massage',
@@ -97,7 +97,7 @@ export const SCIENCE_HABITS_BY_CONCERN = {
   'face-acne': {
     concernName: 'Facial Acne & Clogged Pores',
     badge: 'Micro-Comedone Prevention',
-    color: '#4D7C6F',
+    color: '#005995',
     habits: [
       {
         id: 'habit-phone-screen-clean',
@@ -120,7 +120,7 @@ export const SCIENCE_HABITS_BY_CONCERN = {
   'body-pigmentation': {
     concernName: 'Uneven Skin Tone & Dark Spots',
     badge: 'Melanin Pathway Regulation',
-    color: '#C97A5E',
+    color: '#00487A',
     habits: [
       {
         id: 'habit-damp-skin-application',
@@ -143,7 +143,7 @@ export const SCIENCE_HABITS_BY_CONCERN = {
   'intimate': {
     concernName: 'Intimate pH Balance & Comfort',
     badge: 'Microbiome Support',
-    color: '#4D7C6F',
+    color: '#005995',
     habits: [
       {
         id: 'habit-front-to-back',

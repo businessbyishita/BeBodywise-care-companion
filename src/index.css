@@ -3,15 +3,15 @@
 @tailwind utilities;
 
 :root {
-  --bg-cream: #FAF8F5;
-  --accent-terracotta: #E87A64;
-  --text-charcoal: #1F2937;
-  --streak-sage: #4D7C6F;
+  --bg-cream: #F0F7FB;
+  --accent-terracotta: #005995;
+  --text-charcoal: #002742;
+  --streak-sage: #005995;
 }
 
 body {
-  background-color: #FAF8F5;
-  color: #1F2937;
+  background-color: #F0F7FB;
+  color: #002742;
   font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -42,7 +42,7 @@ body {
   50% {
     transform: scale(1.04);
     opacity: 1;
-    filter: drop-shadow(0 0 8px rgba(232, 122, 100, 0.4));
+    filter: drop-shadow(0 0 10px rgba(0, 89, 149, 0.5));
   }
   100% {
     transform: scale(1);
@@ -60,19 +60,19 @@ body {
   height: 6px;
 }
 ::-webkit-scrollbar-track {
-  background: #FAF8F5;
+  background: #F0F7FB;
 }
 ::-webkit-scrollbar-thumb {
-  background: #EAE2D8;
+  background: #CDE5F3;
   border-radius: 9999px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #D6C8B8;
+  background: #8CC7E5;
 }
 
 /* Subtle glassmorphism */
 .glass-panel {
-  background: rgba(255, 255, 255, 0.85);
+  background: rgba(255, 255, 255, 0.92);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
 }

@@ -40,11 +40,11 @@ export const DEFAULT_ACTIVE_PRODUCTS = [
     totalApplications: 100, // 50ml / 0.5ml = 100 uses
     remainingUses: 74,
     streakDays: 5,
-    lastLoggedDate: null, // YYYY-MM-DD
+    lastLoggedDate: null,
     loggedToday: false,
-    colorAccent: '#E87A64', // Terracotta
-    liquidColor: 'rgba(232, 122, 100, 0.45)',
-    liquidGlow: 'rgba(232, 122, 100, 0.25)',
+    colorAccent: '#005995', // Primary Bodywise Brand Blue
+    liquidColor: 'rgba(0, 89, 149, 0.45)',
+    liquidGlow: 'rgba(0, 89, 149, 0.25)',
   },
   {
     id: 'salicylic-body-wash',
@@ -86,9 +86,9 @@ export const DEFAULT_ACTIVE_PRODUCTS = [
     streakDays: 8,
     lastLoggedDate: null,
     loggedToday: false,
-    colorAccent: '#4D7C6F', // Sage
-    liquidColor: 'rgba(77, 124, 111, 0.45)',
-    liquidGlow: 'rgba(77, 124, 111, 0.25)',
+    colorAccent: '#00487A', // Deeper Bodywise Shade
+    liquidColor: 'rgba(0, 89, 149, 0.45)',
+    liquidGlow: 'rgba(0, 89, 149, 0.25)',
   },
   {
     id: 'redensyl-hair-serum',
@@ -130,9 +130,9 @@ export const DEFAULT_ACTIVE_PRODUCTS = [
     streakDays: 14,
     lastLoggedDate: null,
     loggedToday: false,
-    colorAccent: '#D25E47', // Deep Terracotta
-    liquidColor: 'rgba(210, 94, 71, 0.45)',
-    liquidGlow: 'rgba(210, 94, 71, 0.25)',
+    colorAccent: '#005995', // Primary Bodywise Brand Blue
+    liquidColor: 'rgba(0, 89, 149, 0.45)',
+    liquidGlow: 'rgba(0, 89, 149, 0.25)',
   }
 ];
 
@@ -172,9 +172,9 @@ export const PRESET_CATALOG_PRODUCTS = [
     streakDays: 0,
     lastLoggedDate: null,
     loggedToday: false,
-    colorAccent: '#C97A5E',
-    liquidColor: 'rgba(201, 122, 94, 0.45)',
-    liquidGlow: 'rgba(201, 122, 94, 0.25)',
+    colorAccent: '#005995',
+    liquidColor: 'rgba(0, 89, 149, 0.45)',
+    liquidGlow: 'rgba(0, 89, 149, 0.25)',
   },
   {
     id: 'biotin-hair-gummies',
@@ -211,9 +211,9 @@ export const PRESET_CATALOG_PRODUCTS = [
     streakDays: 0,
     lastLoggedDate: null,
     loggedToday: false,
-    colorAccent: '#E87A64',
-    liquidColor: 'rgba(232, 122, 100, 0.5)',
-    liquidGlow: 'rgba(232, 122, 100, 0.3)',
+    colorAccent: '#005995',
+    liquidColor: 'rgba(0, 89, 149, 0.5)',
+    liquidGlow: 'rgba(0, 89, 149, 0.3)',
   },
   {
     id: 'salicylic-face-serum',
@@ -250,9 +250,9 @@ export const PRESET_CATALOG_PRODUCTS = [
     streakDays: 0,
     lastLoggedDate: null,
     loggedToday: false,
-    colorAccent: '#4D7C6F',
-    liquidColor: 'rgba(77, 124, 111, 0.45)',
-    liquidGlow: 'rgba(77, 124, 111, 0.25)',
+    colorAccent: '#00487A',
+    liquidColor: 'rgba(0, 89, 149, 0.45)',
+    liquidGlow: 'rgba(0, 89, 149, 0.25)',
   },
   {
     id: 'kojic-acid-body-cream',
@@ -289,9 +289,9 @@ export const PRESET_CATALOG_PRODUCTS = [
     streakDays: 0,
     lastLoggedDate: null,
     loggedToday: false,
-    colorAccent: '#E87A64',
-    liquidColor: 'rgba(232, 122, 100, 0.45)',
-    liquidGlow: 'rgba(232, 122, 100, 0.25)',
+    colorAccent: '#005995',
+    liquidColor: 'rgba(0, 89, 149, 0.45)',
+    liquidGlow: 'rgba(0, 89, 149, 0.25)',
   },
   {
     id: 'lactic-intimate-wash',
@@ -328,8 +328,8 @@ export const PRESET_CATALOG_PRODUCTS = [
     streakDays: 0,
     lastLoggedDate: null,
     loggedToday: false,
-    colorAccent: '#4D7C6F',
-    liquidColor: 'rgba(77, 124, 111, 0.45)',
-    liquidGlow: 'rgba(77, 124, 111, 0.25)',
+    colorAccent: '#005995',
+    liquidColor: 'rgba(0, 89, 149, 0.45)',
+    liquidGlow: 'rgba(0, 89, 149, 0.25)',
   }
 ];
