@@ -17,9 +17,9 @@ export default function VisualDosageGuide({ product, compact = false }) {
             {/* Clinical Recommended Dosage */}
             <div className="flex items-center gap-3 p-3 rounded-xl bg-bodywise-50 border border-bodywise-300 w-full sm:w-1/2">
               <svg viewBox="0 0 80 80" className="w-16 h-16 flex-shrink-0" xmlns="http://www.w3.org/2000/svg">
-                <circle cx="40" cy="40" r="36" fill="#DCEEF7" stroke="#8CC7E5" strokeWidth="1.5" strokeDasharray="3,3" />
+                <circle cx="40" cy="40" r="36" fill="#DCEEF7" stroke="#BDE0F1" strokeWidth="1.5" strokeDasharray="3,3" />
                 {/* Armpit curvature silhouette */}
-                <path d="M 20,20 C 35,45 45,55 60,60" stroke="#BDE0F1" strokeWidth="3" fill="none" strokeLinecap="round" />
+                <path d="M 20,20 C 35,45 45,55 60,60" stroke="#E2F0F8" strokeWidth="3" fill="none" strokeLinecap="round" />
                 {/* 2 overlapping firm swipes in #005995 */}
                 <path d="M 28,26 C 38,42 46,50 56,54" stroke="#005995" strokeWidth="6" strokeLinecap="round" strokeOpacity="0.85" fill="none" />
                 <path d="M 24,32 C 34,46 42,54 52,58" stroke="#00487A" strokeWidth="6" strokeLinecap="round" strokeOpacity="0.95" fill="none" />
@@ -40,10 +40,10 @@ export default function VisualDosageGuide({ product, compact = false }) {
             {/* Under-dosing / Rationing Warning */}
             <div className="flex items-center gap-3 p-3 rounded-xl bg-white border border-bodywise-200 w-full sm:w-1/2">
               <svg viewBox="0 0 80 80" className="w-16 h-16 flex-shrink-0" xmlns="http://www.w3.org/2000/svg">
-                <circle cx="40" cy="40" r="36" fill="#F0F7FB" stroke="#BDE0F1" strokeWidth="1.5" strokeDasharray="3,3" />
-                <path d="M 20,20 C 35,45 45,55 60,60" stroke="#BDE0F1" strokeWidth="3" fill="none" strokeLinecap="round" />
+                <circle cx="40" cy="40" r="36" fill="#F8FAFC" stroke="#E2F0F8" strokeWidth="1.5" strokeDasharray="3,3" />
+                <path d="M 20,20 C 35,45 45,55 60,60" stroke="#E2F0F8" strokeWidth="3" fill="none" strokeLinecap="round" />
                 {/* 1 weak patchy swipe */}
-                <path d="M 32,36 C 36,40 40,44 44,46" stroke="#8CC7E5" strokeWidth="2.5" strokeDasharray="2,2" strokeLinecap="round" fill="none" />
+                <path d="M 32,36 C 36,40 40,44 44,46" stroke="#BDE0F1" strokeWidth="2.5" strokeDasharray="2,2" strokeLinecap="round" fill="none" />
                 {/* Cross badge */}
                 <circle cx="64" cy="20" r="10" fill="#00385F" />
                 <path d="M 61,17 L 67,23 M 67,17 L 61,23" stroke="#FFFFFF" strokeWidth="2" strokeLinecap="round" />
@@ -66,7 +66,7 @@ export default function VisualDosageGuide({ product, compact = false }) {
             {/* 1 Full Coin Pump (5ml) */}
             <div className="flex items-center gap-3 p-3 rounded-xl bg-bodywise-50 border border-bodywise-300 w-full sm:w-1/2">
               <svg viewBox="0 0 80 80" className="w-16 h-16 flex-shrink-0" xmlns="http://www.w3.org/2000/svg">
-                <circle cx="40" cy="40" r="36" fill="#DCEEF7" stroke="#8CC7E5" strokeWidth="1.5" strokeDasharray="3,3" />
+                <circle cx="40" cy="40" r="36" fill="#DCEEF7" stroke="#BDE0F1" strokeWidth="1.5" strokeDasharray="3,3" />
                 {/* Coin pool */}
                 <ellipse cx="40" cy="44" rx="24" ry="18" fill="rgba(0, 89, 149, 0.3)" stroke="#005995" strokeWidth="2" />
                 <ellipse cx="38" cy="42" rx="18" ry="13" fill="rgba(0, 89, 149, 0.6)" />
@@ -88,7 +88,7 @@ export default function VisualDosageGuide({ product, compact = false }) {
             {/* Rationed Pea Drop */}
             <div className="flex items-center gap-3 p-3 rounded-xl bg-white border border-bodywise-200 w-full sm:w-1/2">
               <svg viewBox="0 0 80 80" className="w-16 h-16 flex-shrink-0" xmlns="http://www.w3.org/2000/svg">
-                <circle cx="40" cy="40" r="36" fill="#F0F7FB" stroke="#BDE0F1" strokeWidth="1.5" strokeDasharray="3,3" />
+                <circle cx="40" cy="40" r="36" fill="#F8FAFC" stroke="#E2F0F8" strokeWidth="1.5" strokeDasharray="3,3" />
                 <circle cx="40" cy="44" r="7" fill="rgba(0, 89, 149, 0.25)" stroke="#005995" strokeWidth="1.5" />
                 <text x="40" y="47" textAnchor="middle" fontSize="8" fontWeight="bold" fill="#00487A">1ml</text>
                 <circle cx="64" cy="20" r="10" fill="#00385F" />
@@ -112,10 +112,10 @@ export default function VisualDosageGuide({ product, compact = false }) {
             {/* 1 Full Dropper (1ml) across 4 Scalp Quadrants */}
             <div className="flex items-center gap-3 p-3 rounded-xl bg-bodywise-50 border border-bodywise-300 w-full sm:w-1/2">
               <svg viewBox="0 0 80 80" className="w-16 h-16 flex-shrink-0" xmlns="http://www.w3.org/2000/svg">
-                <circle cx="40" cy="40" r="36" fill="#DCEEF7" stroke="#8CC7E5" strokeWidth="1.5" strokeDasharray="3,3" />
-                <circle cx="40" cy="42" r="22" fill="#FFFFFF" stroke="#8CC7E5" strokeWidth="1.5" />
-                <line x1="40" y1="20" x2="40" y2="64" stroke="#BDE0F1" strokeWidth="1" strokeDasharray="2,2" />
-                <line x1="18" y1="42" x2="62" y2="42" stroke="#BDE0F1" strokeWidth="1" strokeDasharray="2,2" />
+                <circle cx="40" cy="40" r="36" fill="#DCEEF7" stroke="#BDE0F1" strokeWidth="1.5" strokeDasharray="3,3" />
+                <circle cx="40" cy="42" r="22" fill="#FFFFFF" stroke="#BDE0F1" strokeWidth="1.5" />
+                <line x1="40" y1="20" x2="40" y2="64" stroke="#E2F0F8" strokeWidth="1" strokeDasharray="2,2" />
+                <line x1="18" y1="42" x2="62" y2="42" stroke="#E2F0F8" strokeWidth="1" strokeDasharray="2,2" />
                 
                 {/* 4 potent targeted dropper dots in #005995 */}
                 <circle cx="31" cy="33" r="4.5" fill="#005995" />
@@ -140,9 +140,9 @@ export default function VisualDosageGuide({ product, compact = false }) {
             {/* Droplets on Hair Strands */}
             <div className="flex items-center gap-3 p-3 rounded-xl bg-white border border-bodywise-200 w-full sm:w-1/2">
               <svg viewBox="0 0 80 80" className="w-16 h-16 flex-shrink-0" xmlns="http://www.w3.org/2000/svg">
-                <circle cx="40" cy="40" r="36" fill="#F0F7FB" stroke="#BDE0F1" strokeWidth="1.5" strokeDasharray="3,3" />
-                <circle cx="40" cy="42" r="22" fill="#FFFFFF" stroke="#BDE0F1" strokeWidth="1.5" />
-                <circle cx="40" cy="35" r="2.5" fill="#8CC7E5" />
+                <circle cx="40" cy="40" r="36" fill="#F8FAFC" stroke="#E2F0F8" strokeWidth="1.5" strokeDasharray="3,3" />
+                <circle cx="40" cy="42" r="22" fill="#FFFFFF" stroke="#E2F0F8" strokeWidth="1.5" />
+                <circle cx="40" cy="35" r="2.5" fill="#BDE0F1" />
                 <circle cx="64" cy="20" r="10" fill="#00385F" />
                 <path d="M 61,17 L 67,23 M 67,17 L 61,23" stroke="#FFFFFF" strokeWidth="2" strokeLinecap="round" />
               </svg>
