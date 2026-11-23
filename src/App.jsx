@@ -77,8 +77,8 @@ export default function App() {
     return 3; // Wednesday by default (Active day for AHA BHA 3x/week!)
   });
 
-  // Shelf view mode: 'all' (default: nothing disappears, rest days clearly highlighted!) or 'due_only'
-  const [shelfFilter, setShelfFilter] = useState('all');
+  // Show only products scheduled for the selected day by default.
+  const [shelfFilter, setShelfFilter] = useState('due_only');
 
   // Modals & Drawers
   const [isAddDrawerOpen, setIsAddDrawerOpen] = useState(false);
@@ -202,15 +202,14 @@ export default function App() {
       setActiveProducts(DEFAULT_ACTIVE_PRODUCTS);
       setCheckedHabits({ 'habit-dry-60s': true });
       setSimulatedDay(3);
-      setShelfFilter('all');
+      setShelfFilter('due_only');
       triggerToast('Demo reset successfully to initial Be Bodywise clinical state!');
     }
   };
 
   // ----------------------------------------------------
   // Product display list:
-  // By default, ALL items stay visible on shelf so nothing disappears!
-  // Products not scheduled for today are prominently HIGHLIGHTED as Rest Days.
+  // By default, show only items scheduled for the selected day.
   // ----------------------------------------------------
   const productsScheduledToday = activeProducts.filter(p => p.frequencyDays.includes(simulatedDay));
   const productsDisplayed = shelfFilter === 'due_only' ? productsScheduledToday : activeProducts;
@@ -336,6 +335,7 @@ export default function App() {
               activeProducts={activeProducts}
               onSimulateDayChange={(newDay) => {
                 setSimulatedDay(newDay);
+                setShelfFilter('due_only');
                 triggerToast(`Simulating ${DAY_NAMES[newDay]} schedule.`);
               }}
               onQuickLogDose={handleLogDose}
