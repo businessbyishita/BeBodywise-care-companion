@@ -55,18 +55,13 @@ export default function App() {
       const saved = localStorage.getItem(STORAGE_KEY);
       if (saved) {
         const parsed = JSON.parse(saved);
-        if (parsed.checkedHabits) {
-          // The first booster was previously pre-checked in the demo.
-          // Remove that default so every booster starts unchecked.
-          const { 'habit-dry-60s': _previousDemoDefault, ...userCheckedHabits } = parsed.checkedHabits;
-          return userCheckedHabits;
-        }
+        if (parsed.checkedHabits) return parsed.checkedHabits;
       }
     } catch (e) {
       console.error('Error loading checked habits:', e);
     }
-    // Start with every daily booster unchecked.
-    return {};
+    // Pre-check 1 habit for friendly initial state
+    return { 'habit-dry-60s': true };
   });
 
   const [simulatedDay, setSimulatedDay] = useState(() => {
@@ -83,7 +78,7 @@ export default function App() {
   });
 
   // Shelf view mode: 'all' (default: nothing disappears, rest days clearly highlighted!) or 'due_only'
-  const [shelfFilter, setShelfFilter] = useState('due_only');
+  const [shelfFilter, setShelfFilter] = useState('all');
 
   // Modals & Drawers
   const [isAddDrawerOpen, setIsAddDrawerOpen] = useState(false);
@@ -143,7 +138,7 @@ export default function App() {
         particleCount: 50,
         spread: 60,
         origin: { y: 0.7 },
-        colors: ['#005995', '#4DA8D5', '#FFFFFF', '#DCEEF7']
+        colors: ['#005995', '#8CC7E5', '#FFFFFF', '#DCEEF7']
       });
     } catch (e) {}
 
@@ -205,9 +200,9 @@ export default function App() {
     if (window.confirm('Reset all routine doses, bottle levels, and habit streaks to default Be Bodywise demo state?')) {
       localStorage.removeItem(STORAGE_KEY);
       setActiveProducts(DEFAULT_ACTIVE_PRODUCTS);
-      setCheckedHabits({});
+      setCheckedHabits({ 'habit-dry-60s': true });
       setSimulatedDay(3);
-      setShelfFilter('due_only');
+      setShelfFilter('all');
       triggerToast('Demo reset successfully to initial Be Bodywise clinical state!');
     }
   };
@@ -241,11 +236,11 @@ export default function App() {
   });
 
   return (
-    <div className="min-h-screen bg-[#F0F7FB] text-[#002742] flex flex-col items-center">
+    <div className="min-h-screen bg-[#F8FAFC] text-[#002742] flex flex-col items-center">
       {/* Toast Notification */}
       {toastMessage && (
-        <div className="fixed bottom-6 right-6 z-50 bg-[#002742] text-white px-4 py-3 rounded-2xl shadow-warm-lg border-2 border-[#005995] text-xs font-bold flex items-center gap-2 animate-fade-in">
-          <Sparkles className="w-4 h-4 text-[#8CC7E5]" />
+        <div className="fixed bottom-6 right-6 z-50 bg-[#002742] text-white px-4 py-3 rounded-2xl shadow-warm-lg border-2 border-[#DCEEF7] text-xs font-bold flex items-center gap-2 animate-fade-in">
+          <Sparkles className="w-4 h-4 text-[#BDE0F1]" />
           <span>{toastMessage}</span>
         </div>
       )}
@@ -257,15 +252,15 @@ export default function App() {
           <div className="flex items-center justify-between">
             {/* Brand Logo & Clinical Subtitle in White Card with Blue Text */}
             <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-2xl bg-[#DCEEF7] border border-[#005995]/20 flex items-center justify-center text-[#005995] shadow-sm">
-                <ShieldCheck className="w-6 h-6 text-[#005995]" />
+              <div className="w-10 h-10 rounded-2xl bg-[#DCEEF7] border border-[#DCEEF7] flex items-center justify-center text-[#334155] shadow-sm">
+                <ShieldCheck className="w-6 h-6 text-[#334155]" />
               </div>
               <div>
                 <div className="flex items-center gap-2">
-                  <span className="text-xs font-black tracking-widest uppercase text-[#005995]">
+                  <span className="text-xs font-black tracking-widest uppercase text-[#334155]">
                     BE BODYWISE
                   </span>
-                  <span className="px-2 py-0.5 rounded-full text-[9px] font-bold bg-[#DCEEF7] text-[#005995] border border-[#005995]/30">
+                  <span className="px-2 py-0.5 rounded-full text-[9px] font-bold bg-[#DCEEF7] text-[#334155] border border-[#DCEEF7]">
                     CLINICAL
                   </span>
                 </div>
@@ -281,10 +276,10 @@ export default function App() {
               <button
                 type="button"
                 onClick={handleResetDemo}
-                className="px-3 py-1.5 rounded-xl border-2 border-[#DCEEF7] hover:border-[#005995] bg-white hover:bg-[#F0F7FB] text-[#005995] text-xs font-bold flex items-center gap-1.5 transition-all shadow-sm"
+                className="px-3 py-1.5 rounded-xl border-2 border-[#DCEEF7] hover:border-[#DCEEF7] bg-white hover:bg-[#F8FAFC] text-[#334155] text-xs font-bold flex items-center gap-1.5 transition-all shadow-sm"
                 title="Reset all routine doses and bottle depletion levels to initial demo state"
               >
-                <RotateCcw className="w-3.5 h-3.5 text-[#005995]" />
+                <RotateCcw className="w-3.5 h-3.5 text-[#334155]" />
                 <span className="hidden sm:inline">Reset Demo</span>
               </button>
 
@@ -307,7 +302,7 @@ export default function App() {
           {/* Welcome & Clinical Intent Banner in Crisp White with Blue Typography */}
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 p-5 sm:p-6 rounded-3xl bg-white text-[#002742] shadow-warm border-2 border-[#DCEEF7]">
             <div className="space-y-1 max-w-xl">
-              <span className="inline-block text-[11px] font-bold tracking-wider uppercase px-2.5 py-0.5 rounded-full bg-[#DCEEF7] text-[#005995] border border-[#005995]/20">
+              <span className="inline-block text-[11px] font-bold tracking-wider uppercase px-2.5 py-0.5 rounded-full bg-[#DCEEF7] text-[#334155] border border-[#DCEEF7]">
                 Post-Purchase Clinical Companion
               </span>
               <h2 className="text-xl sm:text-2xl font-black text-[#002742] tracking-tight mt-1">
@@ -320,14 +315,14 @@ export default function App() {
 
             {/* Quick summary stats in crisp white/light blue cards */}
             <div className="flex items-center gap-3 self-start sm:self-auto pt-1 sm:pt-0">
-              <div className="px-4 py-2.5 rounded-2xl bg-[#F0F7FB] border border-[#DCEEF7] text-center shadow-sm">
-                <p className="text-[10px] font-bold text-[#005995] uppercase tracking-wider">Due Today</p>
+              <div className="px-4 py-2.5 rounded-2xl bg-[#F8FAFC] border border-[#DCEEF7] text-center shadow-sm">
+                <p className="text-[10px] font-bold text-[#334155] uppercase tracking-wider">Due Today</p>
                 <p className="text-base font-black text-[#002742]">{productsScheduledToday.length} of {activeProducts.length} Items</p>
               </div>
-              <div className="px-4 py-2.5 rounded-2xl bg-[#F0F7FB] border border-[#DCEEF7] text-center shadow-sm">
-                <p className="text-[10px] font-bold text-[#005995] uppercase tracking-wider">Best Streak</p>
-                <p className="text-base font-black text-[#005995] flex items-center justify-center gap-1">
-                  <Flame className="w-4 h-4 fill-[#005995] text-[#005995]" />
+              <div className="px-4 py-2.5 rounded-2xl bg-[#F8FAFC] border border-[#DCEEF7] text-center shadow-sm">
+                <p className="text-[10px] font-bold text-[#334155] uppercase tracking-wider">Best Streak</p>
+                <p className="text-base font-black text-[#334155] flex items-center justify-center gap-1">
+                  <Flame className="w-4 h-4 fill-[#005995] text-[#334155]" />
                   <span>{Math.max(...activeProducts.map(p => p.streakDays), 0)} Days</span>
                 </p>
               </div>
@@ -341,7 +336,6 @@ export default function App() {
               activeProducts={activeProducts}
               onSimulateDayChange={(newDay) => {
                 setSimulatedDay(newDay);
-                setShelfFilter('due_only');
                 triggerToast(`Simulating ${DAY_NAMES[newDay]} schedule.`);
               }}
               onQuickLogDose={handleLogDose}
@@ -362,7 +356,7 @@ export default function App() {
           <section className="space-y-4">
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
               <div>
-                <span className="text-[10px] font-bold uppercase tracking-wider text-[#005995]">
+                <span className="text-[10px] font-bold uppercase tracking-wider text-[#334155]">
                   Daily Protocols
                 </span>
                 <h3 className="text-lg font-black text-[#002742]">
@@ -381,7 +375,7 @@ export default function App() {
                     className={`px-3 py-1.5 rounded-lg transition-all ${
                       shelfFilter === 'all'
                         ? 'bg-[#005995] text-white shadow-sm'
-                        : 'text-[#005995] hover:text-[#00385F]'
+                        : 'text-[#334155] hover:text-[#00385F]'
                     }`}
                   >
                     All Shelf Items ({activeProducts.length})
@@ -392,7 +386,7 @@ export default function App() {
                     className={`px-3 py-1.5 rounded-lg transition-all ${
                       shelfFilter === 'due_only'
                         ? 'bg-[#005995] text-white shadow-sm'
-                        : 'text-[#005995] hover:text-[#00385F]'
+                        : 'text-[#334155] hover:text-[#00385F]'
                     }`}
                   >
                     Due Today Only ({productsScheduledToday.length})
@@ -402,7 +396,7 @@ export default function App() {
                 <button
                   type="button"
                   onClick={() => setIsAddDrawerOpen(true)}
-                  className="text-xs font-bold text-[#005995] hover:text-white bg-white hover:bg-[#005995] flex items-center gap-1 px-3 py-2 rounded-xl border-2 border-[#005995] transition-colors shadow-sm"
+                  className="text-xs font-bold text-[#334155] hover:text-white bg-white hover:bg-[#005995] flex items-center gap-1 px-3 py-2 rounded-xl border-2 border-[#DCEEF7] transition-colors shadow-sm"
                 >
                   <Plus className="w-3.5 h-3.5 stroke-[2.5]" />
                   <span>Add Item</span>
@@ -429,16 +423,16 @@ export default function App() {
 
           {/* Educational Clinical Footer Card */}
           <footer className="p-5 rounded-3xl bg-white border-2 border-[#DCEEF7] shadow-sm text-center space-y-2">
-            <div className="w-8 h-8 rounded-full bg-[#DCEEF7] flex items-center justify-center mx-auto text-[#005995] border border-[#005995]/20">
-              <ShieldCheck className="w-4 h-4 text-[#005995]" />
+            <div className="w-8 h-8 rounded-full bg-[#DCEEF7] flex items-center justify-center mx-auto text-[#334155] border border-[#DCEEF7]">
+              <ShieldCheck className="w-4 h-4 text-[#334155]" />
             </div>
-            <h4 className="text-xs font-bold uppercase tracking-wider text-[#005995]">
+            <h4 className="text-xs font-bold uppercase tracking-wider text-[#334155]">
               The Be Bodywise Clinical Commitment
             </h4>
             <p className="text-xs text-[#00487A] max-w-lg mx-auto leading-relaxed font-medium">
               Dermatologically tested formulations designed for female physiology. Active ingredients calibrated to deliver clinical cellular turnover over a 4–12 week period.
             </p>
-            <div className="pt-2 text-[11px] text-[#005995] font-bold">
+            <div className="pt-2 text-[11px] text-[#334155] font-bold">
               Bodywise Care Companion • Interactive Post-Purchase Experience
             </div>
           </footer>
