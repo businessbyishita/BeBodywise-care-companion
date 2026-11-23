@@ -113,7 +113,7 @@ export default function DepletingBottleSvg({
               <rect x="22" y="42" width="56" height="128" rx="14" ry="14" fill="#FFFFFF" />
 
               {/* Outer Roller Cap / Ball Head */}
-              <circle cx="50" cy="34" r="14" fill="#F0F7FB" stroke="#005995" strokeWidth="1.5" />
+              <circle cx="50" cy="34" r="14" fill="#F8FAFC" stroke="#005995" strokeWidth="1.5" />
               <path d="M 38,40 Q 50,44 62,40 L 64,44 Q 50,47 36,44 Z" fill="#005995" />
 
               {/* Bottle Body Outline with solid white fill */}
@@ -178,7 +178,7 @@ export default function DepletingBottleSvg({
               <rect x="20" y="46" width="60" height="124" rx="10" ry="10" fill="#FFFFFF" />
 
               {/* Pump Dispenser Head */}
-              <rect x="44" y="24" width="12" height="16" fill="#F0F7FB" stroke="#005995" strokeWidth="1" />
+              <rect x="44" y="24" width="12" height="16" fill="#F8FAFC" stroke="#005995" strokeWidth="1" />
               <path d="M 40,24 L 60,24 L 62,18 L 30,18 Q 28,18 28,21 L 28,24 Z" fill="#005995" />
               <rect x="36" y="38" width="28" height="8" rx="2" fill="#005995" />
 
@@ -243,7 +243,7 @@ export default function DepletingBottleSvg({
               {/* Rubber Bulb Pipette Squeezer in #00385F */}
               <path d="M 42,12 C 42,8 58,8 58,12 L 58,22 L 42,22 Z" fill="#00385F" />
               {/* Pipette Collar */}
-              <rect x="36" y="22" width="28" height="14" rx="2" fill="#F0F7FB" stroke="#005995" strokeWidth="1" />
+              <rect x="36" y="22" width="28" height="14" rx="2" fill="#F8FAFC" stroke="#005995" strokeWidth="1" />
               {/* Bottle Neck */}
               <rect x="42" y="36" width="16" height="16" fill="#FFFFFF" stroke="#005995" strokeWidth="1" />
 
@@ -308,7 +308,7 @@ export default function DepletingBottleSvg({
                 <>
                   <rect x="34" y="168" width="32" height="16" rx="2" fill="#005995" />
                   <path d="M 22,46 L 78,46 L 72,168 L 28,168 Z" fill="#FFFFFF" stroke="#005995" strokeWidth="2" />
-                  <rect x="20" y="40" width="60" height="8" rx="1" fill="#F0F7FB" stroke="#005995" strokeWidth="1" />
+                  <rect x="20" y="40" width="60" height="8" rx="1" fill="#F8FAFC" stroke="#005995" strokeWidth="1" />
                   <g clipPath="url(#tubeClip)">
                     <rect x="20" y="46" width="60" height="124" fill="#FFFFFF" />
                     <rect 
@@ -348,7 +348,7 @@ export default function DepletingBottleSvg({
 
         {/* Fill level badge bubble */}
         <div 
-          className="absolute -bottom-2.5 left-1/2 -translate-x-1/2 px-2.5 py-0.5 rounded-full text-[10px] font-black tracking-tight shadow-md border-2 border-[#005995] flex items-center gap-1 whitespace-nowrap bg-white text-[#005995] transition-all duration-300 group-hover:scale-105"
+          className="absolute -bottom-2.5 left-1/2 -translate-x-1/2 px-2.5 py-0.5 rounded-full text-[10px] font-black tracking-tight shadow-md border-2 border-[#DCEEF7] flex items-center gap-1 whitespace-nowrap bg-white text-[#334155] transition-all duration-300 group-hover:scale-105"
         >
           <span className="w-2 h-2 rounded-full bg-[#005995]" />
           <span>{clampedPercent}% Full</span>
@@ -356,8 +356,8 @@ export default function DepletingBottleSvg({
 
         {/* Match Check hint on hover */}
         {isHovered && (
-          <div className="absolute -top-7 left-1/2 -translate-x-1/2 px-2 py-1 bg-[#002742] text-white text-[10px] font-bold rounded-lg shadow-lg whitespace-nowrap pointer-events-none z-20 flex items-center gap-1 animate-fade-in border border-[#005995]">
-            <Sparkles className="w-2.5 h-2.5 text-[#8CC7E5]" />
+          <div className="absolute -top-7 left-1/2 -translate-x-1/2 px-2 py-1 bg-[#002742] text-white text-[10px] font-bold rounded-lg shadow-lg whitespace-nowrap pointer-events-none z-20 flex items-center gap-1 animate-fade-in border border-[#DCEEF7]">
+            <Sparkles className="w-2.5 h-2.5 text-[#BDE0F1]" />
             <span>Check Bottle Match</span>
           </div>
         )}
@@ -368,7 +368,7 @@ export default function DepletingBottleSvg({
         <p className="text-xs font-bold text-[#002742]">
           {remainingUses} of {totalApplications} doses left
         </p>
-        <p className="text-[11px] text-[#005995] font-semibold">
+        <p className="text-[11px] text-[#334155] font-semibold">
           ~{(remainingUses * dosePerUseMl).toFixed(1)} ml remaining
         </p>
       </div>
