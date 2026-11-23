@@ -76,19 +76,18 @@ export default function NotificationBanner({
 
   return (
     <div className="w-full space-y-2">
-      {/* Simulation Controls Strip with Prominently Highlighted Weekday Switcher */}
-      <div className="flex flex-wrap items-center justify-between gap-3 px-4 py-2.5 bg-white/95 backdrop-blur-md rounded-2xl border-2 border-[#005995]/20 shadow-warm-sm">
+      {/* Simulation Controls Strip on White with Blue Accents */}
+      <div className="flex flex-wrap items-center justify-between gap-3 px-4 py-2.5 bg-white backdrop-blur-md rounded-2xl border-2 border-[#DCEEF7] shadow-warm-sm">
         <div className="flex flex-wrap items-center gap-2 sm:gap-3">
-          <div className="flex items-center gap-1.5 text-xs font-black uppercase tracking-wider text-[#005995]">
-            <Calendar className="w-4 h-4 text-[#005995]" />
+          <div className="flex items-center gap-1.5 text-xs font-black uppercase tracking-wider text-[#334155]">
+            <Calendar className="w-4 h-4 text-[#334155]" />
             <span>Select Day:</span>
           </div>
 
           {/* Weekday Switcher Buttons */}
-          <div className="flex items-center gap-1 p-1 bg-[#DCEEF7]/70 rounded-xl border border-[#005995]/20">
+          <div className="flex items-center gap-1 p-1 bg-[#F8FAFC] rounded-xl border border-[#DCEEF7]">
             {days.map((day) => {
               const isSelected = day.id === currentDayOfWeek;
-              const hasRollOn = [1, 3, 5].includes(day.id);
               return (
                 <button
                   key={day.id}
@@ -96,23 +95,20 @@ export default function NotificationBanner({
                   onClick={() => onSimulateDayChange(day.id)}
                   className={`px-3 py-1.5 rounded-lg text-xs transition-all relative flex items-center gap-1 ${
                     isSelected
-                      ? 'bg-[#005995] text-white shadow-md ring-2 ring-[#005995] ring-offset-1 scale-105 font-black z-10'
-                      : 'bg-white text-[#005995] hover:bg-[#F0F7FB] border border-[#005995]/20 font-bold'
+                      ? 'bg-[#005995] text-white shadow-sm scale-105 font-black z-10'
+                      : 'bg-white text-[#334155] hover:bg-[#F0F7FB] border border-[#E2E8F0] font-bold'
                   }`}
-                  title={`${day.full}${hasRollOn ? ' (Active day for AHA BHA 3x/week)' : ' (Rest day for AHA BHA)'}`}
+                  title={day.full}
                 >
                   {isSelected && <Check className="w-3 h-3 stroke-[3]" />}
                   <span>{day.label}</span>
-                  {hasRollOn && (
-                    <span className={`w-1.5 h-1.5 rounded-full ${isSelected ? 'bg-white' : 'bg-[#005995]'}`} />
-                  )}
                 </button>
               );
             })}
           </div>
 
           {/* Active Highlight Pill */}
-          <span className="hidden md:inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-extrabold bg-[#005995] text-white shadow-sm">
+          <span className="hidden md:inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-bold bg-[#F0F7FB] text-[#334155] border border-[#DCEEF7]">
             Active: {currentDayObj.full}
           </span>
         </div>
@@ -122,41 +118,39 @@ export default function NotificationBanner({
           <button
             type="button"
             onClick={handleNextNudge}
-            className="px-3 py-1.5 rounded-xl bg-[#DCEEF7] hover:bg-[#BDE0F1] border border-[#005995]/30 text-[#005995] text-xs font-black flex items-center gap-1.5 shadow-sm transition-all active:scale-95"
+            className="px-3 py-1.5 rounded-xl bg-white hover:bg-[#F8FAFC] border-2 border-[#DCEEF7] hover:border-[#DCEEF7] text-[#334155] text-xs font-bold flex items-center gap-1.5 shadow-sm transition-all active:scale-95"
             title="Cycle through different clinical notification scenarios"
           >
-            <Sparkles className="w-3.5 h-3.5 text-[#005995]" />
+            <Sparkles className="w-3.5 h-3.5 text-[#334155]" />
             <span>Simulate Next Reminder ({currentNudgeIndex % simulatedNudges.length + 1}/{simulatedNudges.length})</span>
           </button>
         </div>
       </div>
 
-      {/* Interactive Notification Nudge Banner */}
+      {/* Interactive Notification Nudge Banner in Crisp White with Blue Accents */}
       {!dismissed && (
-        <div className="relative overflow-hidden rounded-2xl bg-gradient-to-r from-[#00487A] via-[#005995] to-[#00487A] text-white p-3.5 sm:p-4 shadow-warm-lg animate-fade-in border-2 border-[#005995]">
-          <div className="absolute top-0 right-0 -mr-8 -mt-8 w-32 h-32 rounded-full bg-white/10 blur-xl pointer-events-none" />
-
+        <div className="relative overflow-hidden rounded-2xl bg-white border-2 border-[#DCEEF7] text-[#002742] p-4 shadow-warm animate-fade-in">
           <div className="flex items-start justify-between gap-3 relative z-10">
-            <div className="flex items-start gap-3">
-              <div className="w-9 h-9 rounded-xl bg-white/20 backdrop-blur-md flex items-center justify-center flex-shrink-0 mt-0.5 border border-white/30">
-                <Bell className="w-4 h-4 text-white animate-bounce" />
+            <div className="flex items-start gap-3.5">
+              <div className="w-9 h-9 rounded-xl bg-[#DCEEF7] flex items-center justify-center flex-shrink-0 mt-0.5 border border-[#DCEEF7] text-[#334155]">
+                <Bell className="w-4 h-4 text-[#334155] animate-bounce" />
               </div>
 
               <div className="space-y-0.5">
                 <div className="flex items-center gap-2">
-                  <span className="text-[10px] uppercase tracking-wider font-extrabold px-1.5 py-0.5 rounded bg-black/25 text-white">
+                  <span className="text-[10px] uppercase tracking-wider font-extrabold px-2 py-0.5 rounded bg-[#005995] text-white">
                     {activeNudge.badge}
                   </span>
-                  <span className="text-[11px] text-[#DCEEF7] font-medium">
+                  <span className="text-[11px] text-[#334155] font-semibold">
                     {activeNudge.time}
                   </span>
                 </div>
 
-                <h4 className="text-sm font-bold text-white tracking-tight">
+                <h4 className="text-sm font-black text-[#002742] tracking-tight">
                   {activeNudge.title}
                 </h4>
 
-                <p className="text-xs text-white/95 leading-relaxed font-normal max-w-2xl">
+                <p className="text-xs text-[#00487A] leading-relaxed font-medium max-w-2xl">
                   {activeNudge.message}
                 </p>
               </div>
@@ -168,7 +162,7 @@ export default function NotificationBanner({
                 <button
                   type="button"
                   onClick={() => onQuickLogDose(activeNudge.productId)}
-                  className="hidden sm:inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-white text-[#005995] hover:bg-[#F0F7FB] text-xs font-bold shadow-sm transition-all"
+                  className="hidden sm:inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-[#005995] text-white hover:bg-[#00487A] text-xs font-bold shadow-sm transition-all"
                 >
                   <span>Log Now</span>
                   <ChevronRight className="w-3.5 h-3.5" />
@@ -178,7 +172,7 @@ export default function NotificationBanner({
               <button
                 type="button"
                 onClick={() => setDismissed(true)}
-                className="p-1 rounded-lg text-white/80 hover:text-white hover:bg-white/15 transition-colors"
+                className="p-1 rounded-lg text-[#334155] hover:bg-[#F8FAFC] transition-colors"
                 title="Dismiss reminder"
               >
                 <X className="w-4 h-4" />
